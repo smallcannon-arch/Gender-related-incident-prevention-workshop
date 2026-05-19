@@ -6,6 +6,21 @@
   <title>互動統計 Dashboard｜校園性別事件處理實務</title>
   <script src="./config.js"></script>
   <style>
+
+    .current-banner {
+  grid-column: 1 / -1;
+  background: rgba(245, 241, 234, 0.08);
+  border: 1px solid rgba(245, 241, 234, 0.18);
+  border-radius: 18px;
+  padding: 14px 18px;
+  color: var(--paper);
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.hidden-card {
+  display: none;
+}
     :root {
       --navy: #1A2740;
       --navy2: #243447;
@@ -188,25 +203,28 @@
   </header>
 
   <main>
-    <section class="card">
+      <div class="current-banner" id="currentBanner">
+    目前題目：讀取中……
+      </div>
+    <section class="card" data-question-card="q03_anxiety">
       <h2>暖身投票｜最擔心什麼？</h2>
       <div class="meta">A 要不要通報｜B 家長會不會爆炸｜C 程序有沒有錯｜D 我是不是踩法規</div>
       <div id="q03"></div>
     </section>
 
-    <section class="card">
+    <section class="card" data-question-card="q12_first_words">
       <h2>快問快答｜第一句話</h2>
       <div class="meta">A 謝謝你願意說｜B 你確定嗎｜C 他不是那種人｜D 你是不是誤會</div>
       <div id="q12"></div>
     </section>
 
-    <section class="card">
+    <section class="card" data-question-card="q20_case_first_step">
       <h2>案例投票｜最不適合做什麼？</h2>
       <div class="meta">A 接住情緒｜B 確認安全｜C 客觀紀錄｜D 找雙方自行對質</div>
       <div id="q20"></div>
     </section>
 
-    <section class="card">
+    <section class="card" data-question-card="q_flow_status">
       <h2>三色回饋</h2>
       <div class="meta">綠：知道下一步｜黃：還不確定｜紅：先停下來求助</div>
       <div id="traffic"></div>
@@ -226,6 +244,7 @@
 
     let autoRefresh = true;
     let timer = null;
+    let currentQuestionId = "";
 
     function jsonp(url) {
       return new Promise((resolve, reject) => {
@@ -253,6 +272,37 @@
       });
     }
 
+async function loadCurrentQuestion() {
+  if (!GAS_ENDPOINT || GAS_ENDPOINT.includes("請填入")) {
+    return;
+  }
+
+  try {
+    const url = GAS_ENDPOINT + "?action=current&session_id=" + encodeURIComponent(SESSION_ID);
+    const data = await jsonp(url);
+
+    if (data && data.question_id) {
+      currentQuestionId = data.question_id;
+      updateCurrentQuestionView(data.title || data.question_id);
+    }
+  } catch (err) {
+    console.warn("目前題目讀取失敗", err);
+  }
+}
+
+function updateCurrentQuestionView(title) {
+  const banner = document.getElementById("currentBanner");
+  if (banner) {
+    banner.textContent = "目前題目：" + title;
+  }
+
+  const cards = document.querySelectorAll("[data-question-card]");
+  cards.forEach(card => {
+    const id = card.getAttribute("data-question-card");
+    card.classList.toggle("hidden-card", id !== currentQuestionId);
+  });
+}
+    
     function getQuestion(stats, id) {
       return (stats.questions && stats.questions[id]) || {};
     }
@@ -314,6 +364,8 @@
     }
 
     async function loadStats() {
+      await loadCurrentQuestion();
+
       if (!GAS_ENDPOINT || GAS_ENDPOINT.includes("請填入")) {
         document.getElementById("status").textContent = "尚未設定 GAS_ENDPOINT";
         return;

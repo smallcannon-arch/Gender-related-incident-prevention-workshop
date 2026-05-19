@@ -48,14 +48,17 @@ h1{font-size:clamp(38px,4.6vw,76px);line-height:1.16;margin:0;font-weight:800;le
 .hud{position:fixed;left:18px;right:18px;bottom:14px;display:flex;justify-content:space-between;align-items:center;color:rgba(255,255,255,.62);font-size:13px;z-index:99;pointer-events:none}.bar{position:fixed;left:0;bottom:0;height:4px;background:var(--accent);z-index:100;transition:width .25s}.notes{position:fixed;right:18px;top:18px;width:min(420px,34vw);max-height:72vh;overflow:auto;background:rgba(11,17,27,.92);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:1rem 1.2rem;color:#fff;z-index:120;display:none;box-shadow:0 18px 50px rgba(0,0,0,.35)}.notes.show{display:block}.notes h3{margin:.2rem 0 .8rem}.overview .slide{display:block;position:relative;width:320px;height:180px;transform:none!important;margin:14px;box-shadow:0 10px 30px rgba(0,0,0,.35)}.overview .deck{display:flex;align-content:flex-start;justify-content:center;flex-wrap:wrap;overflow:auto;padding:30px}.overview .slide.active{outline:4px solid var(--accent)}.overview .hud,.overview .bar{display:none}
 @media print{html,body{overflow:visible;background:#fff}.deck{display:block;position:static;background:#fff}.slide{display:block;position:relative;width:297mm;height:167mm;page-break-after:always;box-shadow:none}.hud,.bar,.notes{display:none}}
 </style>
+<script src="./config.js"></script>
 </head>
 <body>
 <div class="deck" id="deck">
   <section class="slide active deep" data-notes="開場先慢。把焦點放在「一通電話之後」的第一時間，不急著談法條。"><div class="bg" style="background-image:url('assets/slides/01_cover.png')"></div></section>
   <section class="slide deep" data-notes="停三秒。說：事件可能已發生，但學校第一時間的接法，會決定後續是穩住，還是擴大傷害。"><div class="bg" style="background-image:url('assets/slides/02_opening_quote.png')"></div></section>
-  <section class="slide deep" data-notes="把焦慮正名：這些不是老師不專業，而是第一線真的會同時冒出的聲音。"><div class="bg" style="background-image:url('assets/slides/03_frontline_anxiety.png')"></div></section>
-
-  <section class="slide interact" data-notes="第一次手機互動。請大家開 audience.html，選一張卡舉起來。不收資料，只看現場光點。"><div class="phone-tag">手機互動 01</div><div class="content"><div class="activity"><div><div class="kicker">30 秒暖身</div><h2>你最擔心哪一件事？</h2><p>請用手機掃描 QR Code，進入匿名互動頁。選擇一個最接近你現場感受的答案。這不是考試，只是讓我們看見第一線共同的焦慮。</p><div class="qr-mini">
+  
+  <section class="slide interact"
+  data-question-id="q03_anxiety"
+  data-question-title="暖身投票"
+  data-notes="第一次手機互動。請大家掃描 QR Code，進入匿名互動頁，選擇最接近自己現場感受的答案。"><div class="phone-tag">手機互動 01</div><div class="content"><div class="activity"><div><div class="kicker">30 秒暖身</div><h2>你最擔心哪一件事？</h2><p>請用手機掃描 QR Code，進入匿名互動頁。選擇一個最接近你現場感受的答案。這不是考試，只是讓我們看見第一線共同的焦慮。</p><div class="qr-mini">
   <img src="assets/qr_audience.png" alt="聽眾互動頁 QR Code">
   <div class="qr-caption">掃描開啟聽眾互動頁</div>
 </div>
@@ -66,31 +69,39 @@ h1{font-size:clamp(38px,4.6vw,76px);line-height:1.16;margin:0;font-weight:800;le
   <div class="opt">D 我是不是踩法規？</div>
 </div></div></div></div></section>
 
-  <section class="slide" data-notes="定位：今天不是讓老師背法條，而是把第一時間的紅線和路標放清楚。"><div class="title-top">今天不講什麼／今天要講什麼</div><div class="content"><div class="cols"><div class="panel"><h3>不是</h3><h1>法條背誦課</h1></div><div class="panel"><h3>是</h3><h1>現場避雷課</h1></div></div></div></section>
+  <section class="slide deep" data-notes="把焦慮正名：這些不是老師不專業，而是第一線真的會同時冒出的聲音。"><div class="bg" style="background-image:url('assets/slides/03_frontline_anxiety.png')"></div></section>
+  <section class="slide" data-notes="定位：今天不是讓老師背法條，而是把第一時間的紅線和路標放清楚。"><div class="bg" style="background-image:url('assets/slides/04_not_law_class.png')"></div></section>
   <section class="slide deep" data-notes="段落轉場：先看地圖，什麼事情可能進入性別事件範圍。"><div class="bg" style="background-image:url('assets/slides/05_section_what_are_we_handling.png')"></div></section>
-  <section class="slide" data-notes="這頁不要講成法學課。提醒：第一線不用判斷成立不成立，但要有敏感度。"><div class="title-top">校園性別事件類型</div><div class="content"><div class="table"><div class="row head"><div class="cell">類型</div><div class="cell">常見樣態</div></div><div class="row"><div class="cell">性騷擾</div><div class="cell">玩笑、言語、偷拍</div></div><div class="row"><div class="cell">性霸凌</div><div class="cell">羞辱、排擠</div></div><div class="row"><div class="cell">性侵害</div><div class="cell">強制、違反意願</div></div><div class="row"><div class="cell">性別歧視</div><div class="cell">性別刻板言論</div></div></div></div></section>
+  <section class="slide" data-notes="這頁不要講成法學課。提醒：第一線不用判斷成立不成立，但要有敏感度。"><div class="bg" style="background-image:url('assets/slides/06_event_types.png')"></div></section>
   <section class="slide deep" data-notes="迷思一：玩笑不是免責牌。重點是與性或性別有關、不受歡迎、造成影響。"><div class="bg" style="background-image:url('assets/slides/07_myth_joking.png')"></div></section>
   <section class="slide deep" data-notes="迷思二：關係不等於同意。熟識、過去有好感，也不代表每次互動都被接受。"><div class="bg" style="background-image:url('assets/slides/08_myth_mutual_consent.png')"></div></section>
   <section class="slide deep" data-notes="迷思三：老師不是偵探。第一時間不是審問或確認真假，而是接住、紀錄、通報。"><div class="bg" style="background-image:url('assets/slides/09_myth_ask_before_report.png')"></div></section>
+  
   <section class="slide deep" data-notes="段落轉場：接下來進入核心實務。"><div class="bg" style="background-image:url('assets/slides/10_section_first_response.png')"></div></section>
-  <section class="slide" data-notes="全場核心圖。可以說：如果今天只記一張圖，就記這張。"><div class="title-top">第一時間流程</div><div class="content"><div class="flow"><div class="node">學生說出事件</div><div class="arrow">→</div><div class="node">接住情緒</div><div class="arrow">→</div><div class="node">確認安全</div><div class="arrow">→</div><div class="node">紀錄</div><div class="arrow">→</div><div class="node">通報</div><div class="arrow">→</div><div class="node">啟動後續程序</div></div><div class="photo-note">這張圖請讓老師一眼拍下來</div></div></section>
+  <section class="slide interact"
+  data-question-id="q12_first_words"
+  data-question-title="快問快答｜第一句話"
+  data-notes="第二次手機互動。請聽眾用手機選第一句話。接著揭示：先接住，不急著驗證。"><div class="phone-tag">手機互動 02</div><div class="content"><div class="activity"><div><div class="kicker">快問快答</div><h2>學生說出事件後，第一句話怎麼接？</h2><p>請打開剛才掃描的匿名互動頁，選出你認為最適合的第一句話。這不是考試，而是讓我們看見第一線的直覺反應。</p></div><div class="options"><div class="opt">A 謝謝你願意說</div><div class="opt">B 你確定嗎？</div><div class="opt">C 他不是那種人</div><div class="opt">D 你是不是誤會了？</div></div></div></div></section>
 
-  <section class="slide interact" data-notes="第二次手機互動。請聽眾用手機選第一句話，舉起選項。接著揭示：先接住，不急著驗證。"><div class="phone-tag">手機互動 02</div><div class="content"><div class="activity"><div><div class="kicker">快問快答</div><h2>學生說出事件後，第一句話怎麼接？</h2><p>請用手機選 A–D。先不要討論，舉起來看現場直覺。</p></div><div class="options"><div class="opt">A 你確定嗎？</div><div class="opt">B 謝謝你願意說</div><div class="opt">C 他不是那種人</div><div class="opt">D 先找對方問清楚</div></div></div></div></section>
-
-  <section class="slide" data-notes="溫柔但要有力。孩子願意說出來，是在測試大人能不能接住。"><div class="title-top">第一句話，比你想像更重要</div><div class="content"><div class="cols"><div class="panel yes"><h3>可以說</h3><ul><li>謝謝你願意說</li><li>你現在是安全的</li><li>學校會處理</li></ul></div><div class="panel no"><h3>不要說</h3><ul><li>你確定？</li><li>他不是那種人</li><li>你是不是誤會？</li></ul></div></div></div><div class="anchor"><span>學生說出事件</span><span class="hot">接住情緒</span><span>確認安全</span><span>紀錄</span><span>通報</span><span>啟動後續程序</span></div></section>
-  <section class="slide" data-notes="善意踩雷。很多錯誤不是惡意，是太想趕快解決。"><div class="title-top">第一線最容易踩雷的行為</div><div class="content"><div class="grid4"><div class="card">自行對質</div><div class="card">反覆詢問</div><div class="card">私下和解</div><div class="card">要學生道歉</div></div></div><div class="anchor"><span>學生說出事件</span><span>接住情緒</span><span class="hot">確認安全</span><span>紀錄</span><span>通報</span><span>啟動後續程序</span></div></section>
-  <section class="slide" data-notes="重點句：寫你聽到的、看到的、知道的，不寫你猜的。"><div class="title-top">紀錄，不是作文比賽</div><div class="content"><div class="compare"><div><h2>客觀紀錄</h2><div class="example">「甲生表示……」</div></div><div><h2>主觀判斷</h2><div class="example">「甲生情緒不穩、疑似誇大」</div></div></div></div><div class="anchor"><span>學生說出事件</span><span>接住情緒</span><span>確認安全</span><span class="hot">紀錄</span><span>通報</span><span>啟動後續程序</span></div></section>
+  <section class="slide" data-notes="全場核心圖。可以說：如果今天只記一張圖，就記這張。"><div class="bg" style="background-image:url('assets/slides/11_first_response_flow.png')"></div></section>
+  
+  <section class="slide" data-notes="溫柔但要有力。孩子願意說出來，是在測試大人能不能接住。"><div class="bg" style="background-image:url('assets/slides/12_receive_emotion.png')"></div></section>
+  <section class="slide" data-notes="善意踩雷。很多錯誤不是惡意，是太想趕快解決。"><div class="bg" style="background-image:url('assets/slides/13_avoid_these_actions.png')"></div></section>
+  <section class="slide" data-notes="重點句：寫你聽到的、看到的、知道的，不寫你猜的。"><div class="bg" style="background-image:url('assets/slides/14_objective_record.png')"></div></section>
   <section class="slide deep" data-notes="情緒高點。通報不是老師宣判誰對誰錯，是讓制度開始接手。"><div class="bg" style="background-image:url('assets/slides/15_report_not_conviction.png')"></div></section>
   <section class="slide deep" data-notes="段落轉場：流程不難，難的是人。"><div class="bg" style="background-image:url('assets/slides/16_section_why_difficult.png')"></div></section>
   <section class="slide deep" data-notes="承認現場：學生、家長、同事、行政責任都會進來。"><div class="bg" style="background-image:url('assets/slides/17_hard_part_is_people.png')"></div></section>
-  <section class="slide" data-notes="改口不等於說謊。水面上的「我沒事了」，水面下可能有很多壓力。"><div class="title-top">學生為什麼改口？</div><div class="content"><div class="iceberg"><div class="ice-text-top">我沒事了</div><div class="ice-top"></div><div class="ice-under"></div><div class="ice-labels"><div>害怕</div><div>家長壓力</div><div>同儕壓力</div><div>愧疚</div><div>不想鬧大</div></div></div></div></section>
-  <section class="slide" data-notes="學務不是冷冰冰，輔導不是單獨扛。角色不同，目標一致。"><div class="title-top">學務與輔導的分工</div><div class="content"><div class="cols"><div class="panel"><h3>學務</h3><ul><li>安全與程序</li><li>紀錄與通報</li><li>行政協調</li></ul></div><div class="panel"><h3>輔導</h3><ul><li>情緒支持</li><li>陪伴與穩定</li><li>後續支持系統</li></ul></div></div><p class="sub" style="text-align:center;color:var(--grey);margin-top:2rem">同一件事裡，角色不同，但目標一致。</p></div></section>
-  <section class="slide" data-notes="案例不要急著講答案。先讓老師回答第一句話、確認什麼、不能做什麼、要不要通報。"><div class="title-top">案例討論｜言語性騷擾被當成玩笑</div><div class="content"><div class="casebox">學生多次對另一名學生說出與性或性別有關的玩笑或嘲弄。<br>一開始，大人認為只是同學間開玩笑，未立即處理。<br>後來學生表示不舒服，家長也向學校反映。</div><div class="prompt">如果是你，第一時間會怎麼做？</div></div></section>
+  <section class="slide" data-notes="改口不等於說謊。水面上的「我沒事了」，水面下可能有很多壓力。"><div class="bg" style="background-image:url('assets/slides/18_why_students_recant.png')"></div></section>
+  <section class="slide" data-notes="學務不是冷冰冰，輔導不是單獨扛。角色不同，目標一致。"><div class="bg" style="background-image:url('assets/slides/19_student_affairs_counseling_roles.png')"></div></section>
+  <section class="slide" data-notes="案例不要急著講答案。先讓老師回答第一句話、確認什麼、不能做什麼、要不要通報。"><div class="bg" style="background-image:url('assets/slides/20_case_verbal_harassment.png')"></div></section>
 
-  <section class="slide interact" data-notes="第三次手機互動。拉回六步驟。正向答案不是偵查，而是接住情緒、確認安全、紀錄、通報。"><div class="phone-tag">手機互動 03</div><div class="content"><div class="activity"><div><div class="kicker">案例投票</div><h2>這時第一步最不適合做什麼？</h2><p>用手機選 A–D，舉起來後請旁邊兩位交換理由。</p></div><div class="options"><div class="opt">A 接住情緒</div><div class="opt">B 客觀紀錄</div><div class="opt">C 自行對質</div><div class="opt">D 通報程序</div></div></div></div></section>
+  <section class="slide interact"
+  data-question-id="q20_case_first_step"
+  data-question-title="案例投票"
+  data-notes="第三次手機互動。拉回六步驟。正向答案不是偵查，而是接住情緒、確認安全、紀錄、通報。"><div class="phone-tag">手機互動 03</div><div class="content"><div class="activity"><div><div class="kicker">案例投票</div><h2>這時第一步最不適合做什麼？</h2><p>請打開剛才掃描的匿名互動頁，選出你認為「第一步最不適合」的做法。送出後，我們一起看現場統計。</p></div><div class="options"><div class="opt">A 先接住情緒</div><div class="opt">B 確認安全</div><div class="opt">C 客觀記錄</div><div class="opt">D 找雙方自行對質</div></div></div></div></section>
 
-  <section class="slide" data-notes="數位事件重點：不是先抓兇手，也不是叫學生刪掉就好；先止血，避免再擴散。"><div class="title-top">案例討論｜偷拍與群組擴散</div><div class="content"><div class="casebox">學生未經同意拍攝或截圖與另一名學生有關的影像，<br>並將內容轉傳至群組，造成快速擴散。</div><div class="prompt">這時候，學校最先要處理的是什麼？</div></div></section>
-  <section class="slide" data-notes="這頁講得俐落。群組不是調查室，也不是說明會。"><div class="title-top">LINE 與家長溝通風險</div><div class="content"><div class="risk"><div class="main">家長群組裡的對話，<br>未來都可能是訴訟證據。</div><ul><li>避免情緒性回覆</li><li>避免未查證先表態</li><li>避免在群組中揭露過多個案資訊</li></ul></div></div></section>
+  <section class="slide" data-notes="數位事件重點：不是先抓兇手，也不是叫學生刪掉就好；先止血，避免再擴散。"><div class="bg" style="background-image:url('assets/slides/21_case_photo_group_spread.png')"></div></section>
+  <section class="slide" data-notes="這頁講得俐落。群組不是調查室，也不是說明會。"><div class="bg" style="background-image:url('assets/slides/22_line_parent_risk.png')"></div></section>
   <section class="slide deep" data-notes="收束。不要講太多，讓句子停在場內。"><div class="bg" style="background-image:url('assets/slides/23_closing_quote.png')"></div></section>
   <section class="slide" data-notes="進入討論：不急著找標準答案，把現場難題攤開來談。"><div class="bg" style="background-image:url('assets/slides/24_qa.png')"></div></section>
 </div>
@@ -98,6 +109,36 @@ h1{font-size:clamp(38px,4.6vw,76px);line-height:1.16;margin:0;font-weight:800;le
 <div class="hud"><div>← → / Space 換頁　N 講者備忘　F 全螢幕　G 總覽　D 統計頁　P 列印</div><div id="pageNo"></div></div><div class="bar" id="bar"></div>
 <script>
 const slides=[...document.querySelectorAll('.slide')];let i=0;const notes=document.getElementById('notes');const noteText=document.getElementById('noteText');
+const CONFIG = window.INTERACTION_CONFIG || {};
+const GAS_ENDPOINT = CONFIG.GAS_ENDPOINT || "";
+const SESSION_ID = CONFIG.SESSION_ID || "gender-seminar-2026";
+
+let lastSyncedQuestionId = "";
+
+function syncCurrentQuestion(slide) {
+  const questionId = slide.dataset.questionId;
+  const title = slide.dataset.questionTitle || "";
+
+  if (!questionId) return;
+  if (!GAS_ENDPOINT || GAS_ENDPOINT.includes("請填入")) return;
+  if (questionId === lastSyncedQuestionId) return;
+
+  lastSyncedQuestionId = questionId;
+
+  const payload = {
+    action: "set_current",
+    session_id: SESSION_ID,
+    question_id: questionId,
+    title: title
+  };
+
+  fetch(GAS_ENDPOINT, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(payload)
+  });
+}
 function audienceUrl(){try{return new URL('audience.html', location.href).href}catch(e){return 'audience.html'}}
 ['audienceUrl1','audienceUrl2','audienceUrl3'].forEach(id=>{const el=document.getElementById(id); if(el) el.textContent='聽眾頁：'+audienceUrl();});
 function dashboardUrl(){
@@ -107,7 +148,20 @@ function dashboardUrl(){
     return 'dashboard.html';
   }
 }
-function show(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,k)=>s.classList.toggle('active',k===i));document.getElementById('pageNo').textContent=(i+1)+' / '+slides.length;document.getElementById('bar').style.width=((i+1)/slides.length*100)+'%';noteText.textContent=slides[i].dataset.notes||'';location.hash='s'+(i+1)}
+function show(n) {
+  i = Math.max(0, Math.min(slides.length - 1, n));
+
+  slides.forEach((s, k) => {
+    s.classList.toggle('active', k === i);
+  });
+
+  document.getElementById('pageNo').textContent = (i + 1) + ' / ' + slides.length;
+  document.getElementById('bar').style.width = ((i + 1) / slides.length * 100) + '%';
+  noteText.textContent = slides[i].dataset.notes || '';
+  location.hash = 's' + (i + 1);
+
+  syncCurrentQuestion(slides[i]);
+}
 function next(){show(i+1)} function prev(){show(i-1)}
 document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();next()} if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();prev()} if(e.key==='Home')show(0); if(e.key==='End')show(slides.length-1); if(e.key.toLowerCase()==='n')notes.classList.toggle('show'); if(e.key.toLowerCase()==='f'){document.documentElement.requestFullscreen?.()} if(e.key.toLowerCase()==='g'){document.body.classList.toggle('overview')} if(e.key.toLowerCase()==='p')window.print();if(e.key.toLowerCase()==='d'){
   window.open(dashboardUrl(), '_blank', 'noopener');
