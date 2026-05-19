@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>聽眾互動頁｜校園性別事件處理實務</title>
+  <script src="./config.js"></script>
+  <style>
+    :root {
+      --navy: #1A2740;
+      --navy2: #243447;
+      --paper: #F5F1EA;
+      --muted: #C9C7C0;
+      --text: #263142;
+      --white: #FFFDF7;
+      --danger: #8B3A3A;
+      --amber: #9A6A2F;
+      --green: #3E6B55;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      background: var(--navy);
+      color: var(--paper);
+      line-height: 1.5;
+    }
+
+    header {
+      padding: 20px 18px 14px;
+      border-bottom: 1px solid rgba(245, 241, 234, 0.16);
+      background: linear-gradient(180deg, #172238, #1A2740);
+    }
+
+    .eyebrow {
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      opacity: 0.72;
+      margin-bottom: 6px;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin: 0;
+      font-weight: 750;
+    }
+
+    main {
+      padding: 18px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .notice {
+      border: 1px solid rgba(245, 241, 234, 0.22);
+      background: rgba(245, 241, 234, 0.08);
+      border-radius: 18px;
+      padding: 14px 15px;
+      font-size: 14px;
+      color: rgba(245, 241, 234, 0.88);
+      margin-bottom: 18px;
+    }
+
+    .notice strong {
+      color: var(--white);
+    }
+
+    .panel {
+      background: var(--paper);
+      color: var(--text);
+      border-radius: 22px;
+      padding: 18px;
+      margin: 16px 0;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+    }
+
+    .panel h2 {
+      margin: 0 0 10px;
+      color: var(--navy);
+      font-size: 20px;
+    }
+
+    .question {
+      font-size: 18px;
+      font-weight: 720;
+      margin: 8px 0 14px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .option-btn {
+      width: 100%;
+      border: 1px solid rgba(26, 39, 64, 0.18);
+      border-radius: 16px;
+      background: var(--white);
+      color: var(--navy);
+      padding: 14px;
+      font-size: 17px;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .option-btn:active {
+      transform: scale(0.99);
+    }
+
+    .option-key {
+      display: inline-flex;
+      width: 30px;
+      height: 30px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--navy);
+      color: var(--paper);
+      margin-right: 8px;
+      font-weight: 800;
+    }
+
+    .traffic {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .traffic button {
+      border: 0;
+      border-radius: 18px;
+      color: white;
+      padding: 16px;
+      font-size: 18px;
+      font-weight: 750;
+    }
+
+    .green { background: var(--green); }
+    .yellow { background: var(--amber); }
+    .red { background: var(--danger); }
+
+    textarea {
+      width: 100%;
+      min-height: 100px;
+      border-radius: 16px;
+      border: 1px solid rgba(26, 39, 64, 0.2);
+      padding: 12px;
+      font-size: 16px;
+      resize: vertical;
+      font-family: inherit;
+    }
+
+    .send-btn {
+      margin-top: 10px;
+      width: 100%;
+      border: 0;
+      border-radius: 16px;
+      background: var(--navy);
+      color: var(--paper);
+      padding: 14px;
+      font-size: 17px;
+      font-weight: 750;
+    }
+
+    .small {
+      font-size: 13px;
+      color: rgba(38, 49, 66, 0.72);
+      margin-top: 8px;
+    }
+
+    .status {
+      position: fixed;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      background: rgba(12, 18, 30, 0.92);
+      color: var(--paper);
+      border: 1px solid rgba(245, 241, 234, 0.18);
+      padding: 12px 14px;
+      border-radius: 16px;
+      display: none;
+      text-align: center;
+      z-index: 20;
+    }
+
+    .status.show { display: block; }
+
+    footer {
+      padding: 18px;
+      text-align: center;
+      font-size: 12px;
+      color: rgba(245, 241, 234, 0.6);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">匿名互動頁</div>
+    <h1 id="eventTitle">校園性別事件處理實務</h1>
+  </header>
+
+  <main>
+    <div class="notice">
+      <strong>請放心作答：</strong>本頁不要求姓名、不登入、不蒐集 email。<br>
+      留言請勿輸入學生姓名、班級、座號、學校真實個案細節或任何可識別資料。
+    </div>
+
+    <section class="panel">
+      <h2>暖身投票</h2>
+      <div class="question">第一時間，你最擔心的是什麼？</div>
+      <div class="grid">
+        <button class="option-btn" onclick="submitResponse('q03_anxiety','choice','A')"><span class="option-key">A</span>要不要通報？</button>
+        <button class="option-btn" onclick="submitResponse('q03_anxiety','choice','B')"><span class="option-key">B</span>家長會不會爆炸？</button>
+        <button class="option-btn" onclick="submitResponse('q03_anxiety','choice','C')"><span class="option-key">C</span>程序有沒有錯？</button>
+        <button class="option-btn" onclick="submitResponse('q03_anxiety','choice','D')"><span class="option-key">D</span>我是不是踩法規？</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>快問快答</h2>
+      <div class="question">學生說出事件後，第一句話最適合？</div>
+      <div class="grid">
+        <button class="option-btn" onclick="submitResponse('q12_first_words','choice','A')"><span class="option-key">A</span>謝謝你願意說</button>
+        <button class="option-btn" onclick="submitResponse('q12_first_words','choice','B')"><span class="option-key">B</span>你確定嗎？</button>
+        <button class="option-btn" onclick="submitResponse('q12_first_words','choice','C')"><span class="option-key">C</span>他不是那種人</button>
+        <button class="option-btn" onclick="submitResponse('q12_first_words','choice','D')"><span class="option-key">D</span>你是不是誤會？</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>案例投票</h2>
+      <div class="question">案例討論時，第一步最不適合做什麼？</div>
+      <div class="grid">
+        <button class="option-btn" onclick="submitResponse('q20_case_first_step','choice','A')"><span class="option-key">A</span>先接住情緒</button>
+        <button class="option-btn" onclick="submitResponse('q20_case_first_step','choice','B')"><span class="option-key">B</span>確認安全</button>
+        <button class="option-btn" onclick="submitResponse('q20_case_first_step','choice','C')"><span class="option-key">C</span>客觀紀錄</button>
+        <button class="option-btn" onclick="submitResponse('q20_case_first_step','choice','D')"><span class="option-key">D</span>找雙方自行對質</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>三色回饋</h2>
+      <div class="question">聽到這裡，你對「第一時間怎麼做」的狀態是？</div>
+      <div class="traffic">
+        <button class="green" onclick="submitResponse('q_flow_status','traffic','green')">綠｜我知道下一步</button>
+        <button class="yellow" onclick="submitResponse('q_flow_status','traffic','yellow')">黃｜我還不確定</button>
+        <button class="red" onclick="submitResponse('q_flow_status','traffic','red')">紅｜我會想先停下來求助</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>匿名一句話</h2>
+      <div class="question">聽完今天，你想帶回學校的一句提醒是什麼？</div>
+      <textarea id="messageInput" maxlength="50" placeholder="請輸入 50 字以內。請勿輸入任何可識別個案資訊。"></textarea>
+      <button class="send-btn" onclick="submitMessage()">送出匿名留言</button>
+      <div class="small">最多 50 字。留言會出現在講者端 dashboard，講者可選擇是否現場分享。</div>
+    </section>
+  </main>
+
+  <div id="status" class="status"></div>
+
+  <footer>
+    本互動頁僅作研習現場匿名回饋使用。
+  </footer>
+
+  <script>
+    const CONFIG = window.INTERACTION_CONFIG || {};
+    const GAS_ENDPOINT = CONFIG.GAS_ENDPOINT || "";
+    const SESSION_ID = CONFIG.SESSION_ID || "gender-seminar-2026";
+
+    const SUBMITTED_KEY = "gender_seminar_submitted_questions";
+    const submittedQuestions = new Set(
+      JSON.parse(sessionStorage.getItem(SUBMITTED_KEY) || "[]")
+);
+
+function saveSubmittedQuestions() {
+  sessionStorage.setItem(
+    SUBMITTED_KEY,
+    JSON.stringify(Array.from(submittedQuestions))
+  );
+}
+
+function disableQuestionButtons(questionId) {
+  const buttons = document.querySelectorAll(`button[onclick*="${questionId}"]`);
+  buttons.forEach((button) => {
+    button.disabled = true;
+    button.style.opacity = "0.55";
+    button.style.cursor = "not-allowed";
+  });
+}
+
+function restoreSubmittedState() {
+  submittedQuestions.forEach((questionId) => {
+    disableQuestionButtons(questionId);
+  });
+}
+
+    document.getElementById("eventTitle").textContent = CONFIG.EVENT_TITLE || "校園性別事件處理實務";
+
+    function showStatus(text) {
+      const el = document.getElementById("status");
+      el.textContent = text;
+      el.classList.add("show");
+      setTimeout(() => el.classList.remove("show"), 1800);
+    }
+
+    function sanitizeMessage(text) {
+      return String(text || "")
+        .replace(/[<>]/g, "")
+        .replace(/\s+/g, " ")
+        .trim()
+        .slice(0, 50);
+    }
+
+    function submitResponse(questionId, responseType, answer) {
+      if (submittedQuestions.has(questionId)) {
+        showStatus("本題已送出，謝謝！");
+        return;
+      }
+
+      if (!GAS_ENDPOINT || GAS_ENDPOINT.includes("請填入")) {
+        showStatus("尚未設定 GAS_ENDPOINT");
+        return;
+      }
+
+      submittedQuestions.add(questionId);
+      saveSubmittedQuestions();
+      disableQuestionButtons(questionId);
+      
+      const payload = {
+        session_id: SESSION_ID,
+        question_id: questionId,
+        response_type: responseType,
+        answer: answer,
+        message: ""
+      };
+
+      fetch(GAS_ENDPOINT, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+      });
+
+      showStatus("已送出，謝謝！");
+    }
+
+    function submitMessage() {
+      const input = document.getElementById("messageInput");
+      const message = sanitizeMessage(input.value);
+
+      if (!message) {
+        showStatus("請先輸入一句話");
+        return;
+      }
+
+      if (!GAS_ENDPOINT || GAS_ENDPOINT.includes("請填入")) {
+        showStatus("尚未設定 GAS_ENDPOINT");
+        return;
+      }
+
+      const payload = {
+        session_id: SESSION_ID,
+        question_id: "q_final_message",
+        response_type: "message",
+        answer: "",
+        message: message
+      };
+
+      fetch(GAS_ENDPOINT, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+      });
+
+      input.value = "";
+      showStatus("匿名留言已送出");
+    }
+
+  restoreSubmittedState();  
+  </script>
+</body>
+</html>
