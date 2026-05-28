@@ -162,6 +162,8 @@ const SESSION_ID = CONFIG.SESSION_ID || "gender-seminar-2026";
 
 let lastSyncedQuestionId = "";
 let syncRetryTimers = [];
+const LIVE_QUESTION_KEY = "gender_seminar_live_question";
+let questionChannel = null;
 
 function runAfterSlidePaint(fn) {
   if ('requestAnimationFrame' in window) {
@@ -186,6 +188,30 @@ function sendCurrentQuestionPayload(payload) {
   }).catch(err => console.warn("互動題同步失敗", err));
 }
 
+function getQuestionChannel() {
+  if (!('BroadcastChannel' in window)) return null;
+  if (!questionChannel) questionChannel = new BroadcastChannel("gender_seminar_question");
+  return questionChannel;
+}
+
+function publishLocalCurrentQuestion(payload) {
+  const data = {
+    session_id: payload.session_id,
+    question_id: payload.question_id,
+    title: payload.title,
+    updated_at: new Date().toISOString()
+  };
+
+  try {
+    localStorage.setItem(LIVE_QUESTION_KEY, JSON.stringify(data));
+  } catch(e) {}
+
+  try {
+    const channel = getQuestionChannel();
+    if (channel) channel.postMessage(data);
+  } catch(e) {}
+}
+
 function syncCurrentQuestion(slide, force = false) {
   const questionId = slide.dataset.questionId;
   const title = slide.dataset.questionTitle || "";
@@ -203,6 +229,8 @@ function syncCurrentQuestion(slide, force = false) {
     question_id: questionId,
     title: title
   };
+
+  publishLocalCurrentQuestion(payload);
 
   [80, 1100, 3100].forEach(delay => {
     syncRetryTimers.push(setTimeout(() => {

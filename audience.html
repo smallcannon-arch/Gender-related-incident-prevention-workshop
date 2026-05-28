@@ -309,9 +309,22 @@ function renderCurrentQuestion() {
 };
 
 const CURRENT_QUESTION_KEY = "gender_seminar_current_question";
+const LIVE_QUESTION_KEY = "gender_seminar_live_question";
+let questionChannel = null;
+
+function getLiveCurrentQuestion() {
+  try {
+    return JSON.parse(localStorage.getItem(LIVE_QUESTION_KEY) || "null");
+  } catch (err) {
+    return null;
+  }
+}
 
 function getCachedCurrentQuestionId() {
   try {
+    const live = getLiveCurrentQuestion();
+    if (live && QUESTIONS[live.question_id]) return live.question_id;
+
     const cached = localStorage.getItem(CURRENT_QUESTION_KEY);
     return QUESTIONS[cached] ? cached : "q03_anxiety";
   } catch (err) {
@@ -326,6 +339,51 @@ function saveCurrentQuestionId(questionId) {
 }
 
 let currentQuestionId = getCachedCurrentQuestionId();
+
+function applyCurrentQuestionData(data) {
+  if (!data || !QUESTIONS[data.question_id]) return;
+  if (data.session_id && data.session_id !== SESSION_ID) return;
+
+  if (currentQuestionId !== data.question_id) {
+    currentQuestionId = data.question_id;
+    saveCurrentQuestionId(currentQuestionId);
+    renderCurrentQuestion();
+  } else {
+    saveCurrentQuestionId(currentQuestionId);
+  }
+}
+
+function setupLocalQuestionSync() {
+  window.addEventListener("storage", (event) => {
+    if (event.key !== LIVE_QUESTION_KEY || !event.newValue) return;
+
+    try {
+      applyCurrentQuestionData(JSON.parse(event.newValue));
+    } catch (err) {}
+  });
+
+  if ("BroadcastChannel" in window) {
+    questionChannel = new BroadcastChannel("gender_seminar_question");
+    questionChannel.onmessage = (event) => applyCurrentQuestionData(event.data);
+  }
+
+  window.addEventListener("focus", () => {
+    applyCurrentQuestionData(getLiveCurrentQuestion());
+    loadCurrentQuestion();
+  });
+
+  window.addEventListener("pageshow", () => {
+    applyCurrentQuestionData(getLiveCurrentQuestion());
+    loadCurrentQuestion();
+  });
+
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) {
+      applyCurrentQuestionData(getLiveCurrentQuestion());
+      loadCurrentQuestion();
+    }
+  });
+}
 
 function jsonp(url, timeoutMs = 4500) {
   return new Promise((resolve, reject) => {
@@ -367,15 +425,7 @@ async function loadCurrentQuestion() {
     const url = GAS_ENDPOINT + "?action=current&session_id=" + encodeURIComponent(SESSION_ID);
     const data = await jsonp(url);
 
-    if (data && data.question_id && QUESTIONS[data.question_id]) {
-      if (currentQuestionId !== data.question_id) {
-        currentQuestionId = data.question_id;
-        saveCurrentQuestionId(currentQuestionId);
-        renderCurrentQuestion();
-      } else {
-        saveCurrentQuestionId(currentQuestionId);
-      }
-    }
+    applyCurrentQuestionData(data);
   } catch (err) {
     console.warn("目前題目讀取失敗", err);
   }
@@ -493,6 +543,8 @@ function restoreSubmittedState() {
       showStatus("匿名留言已送出");
     }
 
+  setupLocalQuestionSync();
+  applyCurrentQuestionData(getLiveCurrentQuestion());
   renderCurrentQuestion();
   restoreSubmittedState();
   
