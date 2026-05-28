@@ -163,6 +163,15 @@ const SESSION_ID = CONFIG.SESSION_ID || "gender-seminar-2026";
 let lastSyncedQuestionId = "";
 let syncRetryTimers = [];
 
+function runAfterSlidePaint(fn) {
+  if ('requestAnimationFrame' in window) {
+    requestAnimationFrame(() => setTimeout(fn, 0));
+    return;
+  }
+
+  setTimeout(fn, 0);
+}
+
 function clearSyncRetryTimers() {
   syncRetryTimers.forEach(timer => clearTimeout(timer));
   syncRetryTimers = [];
@@ -195,12 +204,7 @@ function syncCurrentQuestion(slide, force = false) {
     title: title
   };
 
-  [0, 1000, 3000].forEach(delay => {
-    if (delay === 0) {
-      sendCurrentQuestionPayload(payload);
-      return;
-    }
-
+  [80, 1100, 3100].forEach(delay => {
     syncRetryTimers.push(setTimeout(() => {
       sendCurrentQuestionPayload(payload);
     }, delay));
@@ -208,7 +212,7 @@ function syncCurrentQuestion(slide, force = false) {
 }
 
 function resyncCurrentQuestion() {
-  syncCurrentQuestion(slides[i], true);
+  runAfterSlidePaint(() => syncCurrentQuestion(slides[i], true));
 }
 function audienceUrl(){try{return new URL('audience.html', location.href).href}catch(e){return 'audience.html'}}
 ['audienceUrl1','audienceUrl2','audienceUrl3'].forEach(id=>{const el=document.getElementById(id); if(el) el.textContent='聽眾頁：'+audienceUrl();});
@@ -241,7 +245,7 @@ function show(n) {
   noteText.textContent = slides[i].dataset.notes || '';
   updateSlideHash(i);
 
-  syncCurrentQuestion(slides[i]);
+  runAfterSlidePaint(() => syncCurrentQuestion(slides[i]));
 }
 function next(){show(i+1)} function prev(){show(i-1)}
 document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();next()} if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();prev()} if(e.key==='Home')show(0); if(e.key==='End')show(slides.length-1); if(e.key.toLowerCase()==='n')notes.classList.toggle('show'); if(e.key.toLowerCase()==='f'){document.documentElement.requestFullscreen?.()} if(e.key.toLowerCase()==='g'){document.body.classList.toggle('overview')} if(e.key.toLowerCase()==='r'){resyncCurrentQuestion()} if(e.key.toLowerCase()==='p')window.print();if(e.key.toLowerCase()==='d'){
