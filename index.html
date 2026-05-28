@@ -203,16 +203,18 @@ function publishLocalCurrentQuestion(payload) {
   };
 
   try {
-    localStorage.setItem(LIVE_QUESTION_KEY, JSON.stringify(data));
-  } catch(e) {}
-
-  try {
     const channel = getQuestionChannel();
     if (channel) channel.postMessage(data);
   } catch(e) {}
+
+  setTimeout(() => {
+    try {
+      localStorage.setItem(LIVE_QUESTION_KEY, JSON.stringify(data));
+    } catch(e) {}
+  }, 0);
 }
 
-function syncCurrentQuestion(slide, force = false) {
+function syncCurrentQuestion(slide, force = false, robust = false) {
   const questionId = slide.dataset.questionId;
   const title = slide.dataset.questionTitle || "";
 
@@ -232,15 +234,26 @@ function syncCurrentQuestion(slide, force = false) {
 
   publishLocalCurrentQuestion(payload);
 
-  [80, 1100, 3100].forEach(delay => {
+  const delays = robust ? [80, 1100, 3100] : [250, 1600];
+
+  delays.forEach(delay => {
     syncRetryTimers.push(setTimeout(() => {
       sendCurrentQuestionPayload(payload);
     }, delay));
   });
 }
 
+function scheduleCurrentQuestionSync(slide, force = false, robust = false) {
+  if (!slide.dataset.questionId) {
+    clearSyncRetryTimers();
+    return;
+  }
+
+  runAfterSlidePaint(() => syncCurrentQuestion(slide, force, robust));
+}
+
 function resyncCurrentQuestion() {
-  runAfterSlidePaint(() => syncCurrentQuestion(slides[i], true));
+  scheduleCurrentQuestionSync(slides[i], true, true);
 }
 function audienceUrl(){try{return new URL('audience.html', location.href).href}catch(e){return 'audience.html'}}
 ['audienceUrl1','audienceUrl2','audienceUrl3'].forEach(id=>{const el=document.getElementById(id); if(el) el.textContent='聽眾頁：'+audienceUrl();});
@@ -273,7 +286,7 @@ function show(n) {
   noteText.textContent = slides[i].dataset.notes || '';
   updateSlideHash(i);
 
-  runAfterSlidePaint(() => syncCurrentQuestion(slides[i]));
+  scheduleCurrentQuestionSync(slides[i]);
 }
 function next(){show(i+1)} function prev(){show(i-1)}
 document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();next()} if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();prev()} if(e.key==='Home')show(0); if(e.key==='End')show(slides.length-1); if(e.key.toLowerCase()==='n')notes.classList.toggle('show'); if(e.key.toLowerCase()==='f'){document.documentElement.requestFullscreen?.()} if(e.key.toLowerCase()==='g'){document.body.classList.toggle('overview')} if(e.key.toLowerCase()==='r'){resyncCurrentQuestion()} if(e.key.toLowerCase()==='p')window.print();if(e.key.toLowerCase()==='d'){
