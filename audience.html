@@ -1,11 +1,476 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>聽眾互動卡｜校園性別事件處理實務</title><style>
-:root{--navy:#1A2740;--cream:#F5F1EA;--warm:#F8F3E8;--line:#C9C7C0;--green:#3F5D4A;--yellow:#8A6A35;--red:#6E3A3A;--blue:#243447}*{box-sizing:border-box}body{margin:0;font-family:"Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;background:var(--navy);color:var(--warm)}.wrap{max-width:760px;margin:0 auto;padding:24px 18px 48px}h1{font-size:30px;margin:12px 0 6px}p{line-height:1.55;color:rgba(248,243,232,.82)}.hint{font-size:14px;border:1px solid rgba(248,243,232,.22);border-radius:14px;padding:12px;background:rgba(255,255,255,.06)}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0}.tab{border:1px solid rgba(248,243,232,.35);border-radius:999px;padding:10px 14px;background:rgba(255,255,255,.06);color:var(--warm);font-weight:700}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}.card{min-height:128px;border-radius:22px;border:1px solid rgba(248,243,232,.22);display:grid;place-items:center;text-align:center;padding:18px;font-size:28px;font-weight:900;background:rgba(255,255,255,.08);color:var(--warm)}.card small{display:block;font-size:15px;font-weight:500;margin-top:6px;opacity:.85}.green{background:var(--green)}.yellow{background:var(--yellow)}.red{background:var(--red)}.blue{background:var(--blue)}.panel{display:none}.panel.active{display:block}textarea{width:100%;min-height:150px;border-radius:18px;border:1px solid rgba(248,243,232,.25);background:rgba(255,255,255,.08);color:var(--warm);font-size:18px;padding:14px;line-height:1.5}.big{position:fixed;inset:0;display:none;place-items:center;text-align:center;padding:26px;z-index:10}.big.show{display:grid}.big .letter{font-size:min(42vw,240px);font-weight:1000;line-height:.9}.big .label{font-size:min(9vw,56px);font-weight:900;margin-top:20px}.close{position:fixed;left:16px;top:16px;border:1px solid rgba(255,255,255,.5);border-radius:999px;padding:10px 14px;background:rgba(0,0,0,.2);color:#fff}.footer{margin-top:24px;font-size:13px;color:rgba(248,243,232,.65)}@media(max-width:520px){.grid{grid-template-columns:1fr}.card{min-height:110px}h1{font-size:26px}}
-</style></head><body><div class="wrap"><h1>聽眾互動卡</h1><p>請依講者指示選一張卡，讓手機螢幕成為你的答案。這個頁面不會送出資料，也不會蒐集個資。</p><div class="hint">建議：把手機亮度調高，選好後舉起來。需要回到選單時，點畫面左上角「返回」。</div><div class="tabs"><button class="tab" data-tab="abcd">A/B/C/D</button><button class="tab" data-tab="light">三色卡</button><button class="tab" data-tab="yesno">是／否</button><button class="tab" data-tab="note">一句話</button></div>
-<section class="panel active" id="abcd"><h2>A/B/C/D 選項卡</h2><div class="grid"><div class="card blue" data-letter="A" data-label="A"><div>A<small>選項 A</small></div></div><div class="card blue" data-letter="B" data-label="B"><div>B<small>選項 B</small></div></div><div class="card blue" data-letter="C" data-label="C"><div>C<small>選項 C</small></div></div><div class="card blue" data-letter="D" data-label="D"><div>D<small>選項 D</small></div></div></div></section>
-<section class="panel" id="light"><h2>三色卡</h2><div class="grid"><div class="card green" data-letter="可以" data-label="我覺得可以"><div>可以<small>綠燈</small></div></div><div class="card yellow" data-letter="不確定" data-label="需要再想"><div>不確定<small>黃燈</small></div></div><div class="card red" data-letter="暫停" data-label="這樣有風險"><div>暫停<small>紅燈</small></div></div></div></section>
-<section class="panel" id="yesno"><h2>是／否</h2><div class="grid"><div class="card green" data-letter="是" data-label="YES"><div>是<small>YES</small></div></div><div class="card red" data-letter="否" data-label="NO"><div>否<small>NO</small></div></div></div></section>
-<section class="panel" id="note"><h2>一句話備忘</h2><p>寫下你想帶回學校的一句提醒。這只是存在你的手機裡，不會送出。</p><textarea placeholder="例如：第一時間不是查明真相，而是接住、紀錄、通報。"></textarea></section>
-<div class="footer">離線／靜態頁面設計：不送出、不儲存到伺服器。若重新整理，文字可能消失。</div></div><div class="big" id="big"><button class="close" id="close">返回</button><div><div class="letter" id="bigLetter"></div><div class="label" id="bigLabel"></div></div></div><script>
-const panels=[...document.querySelectorAll('.panel')];document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{panels.forEach(p=>p.classList.toggle('active',p.id===b.dataset.tab));});
-const big=document.getElementById('big'),L=document.getElementById('bigLetter'),S=document.getElementById('bigLabel');document.querySelectorAll('.card').forEach(c=>c.onclick=()=>{big.className='big show '+[...c.classList].filter(x=>['green','yellow','red','blue'].includes(x)).join(' ');L.textContent=c.dataset.letter;S.textContent=c.dataset.label;});document.getElementById('close').onclick=()=>big.classList.remove('show');
-</script></body></html>
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>聽眾互動頁｜校園性別事件處理實務</title>
+  <script src="./config.js"></script>
+  <style>
+    :root {
+      --navy: #1A2740;
+      --navy2: #243447;
+      --paper: #F5F1EA;
+      --muted: #C9C7C0;
+      --text: #263142;
+      --white: #FFFDF7;
+      --danger: #8B3A3A;
+      --amber: #9A6A2F;
+      --green: #3E6B55;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      background: var(--navy);
+      color: var(--paper);
+      line-height: 1.5;
+    }
+
+    header {
+      padding: 20px 18px 14px;
+      border-bottom: 1px solid rgba(245, 241, 234, 0.16);
+      background: linear-gradient(180deg, #172238, #1A2740);
+    }
+
+    .eyebrow {
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      opacity: 0.72;
+      margin-bottom: 6px;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin: 0;
+      font-weight: 750;
+    }
+
+    main {
+      padding: 18px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .notice {
+      border: 1px solid rgba(245, 241, 234, 0.22);
+      background: rgba(245, 241, 234, 0.08);
+      border-radius: 18px;
+      padding: 14px 15px;
+      font-size: 14px;
+      color: rgba(245, 241, 234, 0.88);
+      margin-bottom: 18px;
+    }
+
+    .notice strong {
+      color: var(--white);
+    }
+
+    .panel {
+      background: var(--paper);
+      color: var(--text);
+      border-radius: 22px;
+      padding: 18px;
+      margin: 16px 0;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+    }
+
+    .panel h2 {
+      margin: 0 0 10px;
+      color: var(--navy);
+      font-size: 20px;
+    }
+
+    .question {
+      font-size: 18px;
+      font-weight: 720;
+      margin: 8px 0 14px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .option-btn {
+      width: 100%;
+      border: 1px solid rgba(26, 39, 64, 0.18);
+      border-radius: 16px;
+      background: var(--white);
+      color: var(--navy);
+      padding: 14px;
+      font-size: 17px;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .option-btn:active {
+      transform: scale(0.99);
+    }
+
+    .option-key {
+      display: inline-flex;
+      width: 30px;
+      height: 30px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--navy);
+      color: var(--paper);
+      margin-right: 8px;
+      font-weight: 800;
+    }
+
+    .traffic {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .traffic button {
+      border: 0;
+      border-radius: 18px;
+      color: white;
+      padding: 16px;
+      font-size: 18px;
+      font-weight: 750;
+    }
+
+    .green { background: var(--green); }
+    .yellow { background: var(--amber); }
+    .red { background: var(--danger); }
+
+    textarea {
+      width: 100%;
+      min-height: 100px;
+      border-radius: 16px;
+      border: 1px solid rgba(26, 39, 64, 0.2);
+      padding: 12px;
+      font-size: 16px;
+      resize: vertical;
+      font-family: inherit;
+    }
+
+    .send-btn {
+      margin-top: 10px;
+      width: 100%;
+      border: 0;
+      border-radius: 16px;
+      background: var(--navy);
+      color: var(--paper);
+      padding: 14px;
+      font-size: 17px;
+      font-weight: 750;
+    }
+
+    .small {
+      font-size: 13px;
+      color: rgba(38, 49, 66, 0.72);
+      margin-top: 8px;
+    }
+
+    .status {
+      position: fixed;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      background: rgba(12, 18, 30, 0.92);
+      color: var(--paper);
+      border: 1px solid rgba(245, 241, 234, 0.18);
+      padding: 12px 14px;
+      border-radius: 16px;
+      display: none;
+      text-align: center;
+      z-index: 20;
+    }
+
+    .status.show { display: block; }
+
+    footer {
+      padding: 18px;
+      text-align: center;
+      font-size: 12px;
+      color: rgba(245, 241, 234, 0.6);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">匿名互動頁</div>
+    <h1 id="eventTitle">校園性別事件處理實務</h1>
+  </header>
+
+  <main>
+  <div class="notice">
+    <strong>請放心作答：</strong>本頁不要求姓名、不登入、不蒐集 email。<br>
+    留言請勿輸入學生姓名、班級、座號、學校真實個案細節或任何可識別資料。
+  </div>
+
+  <section class="panel" id="currentQuestionPanel">
+    <h2 id="currentQuestionTitle">暖身投票</h2>
+    <div class="question" id="currentQuestionPrompt">第一時間，你最擔心的是什麼？</div>
+    <div class="grid" id="currentQuestionOptions"></div>
+    <div class="small" id="currentQuestionHint">請依照投影片提示作答。</div>
+  </section>
+
+  <section class="panel">
+    <h2>匿名一句話</h2>
+    <div class="question">聽完今天，你想帶回學校的一句提醒是什麼？</div>
+    <textarea id="messageInput" maxlength="50" placeholder="請輸入 50 字以內。請勿輸入任何可識別個案資訊。"></textarea>
+    <button class="send-btn" onclick="submitMessage()">送出匿名留言</button>
+    <div class="small">最多 50 字。留言會出現在講者端 dashboard，講者可選擇是否現場分享。</div>
+  </section>
+</main>
+
+  <div id="status" class="status"></div>
+
+  <footer>
+    本互動頁僅作研習現場匿名回饋使用。
+  </footer>
+
+  <script>
+
+function renderCurrentQuestion() {
+  const q = QUESTIONS[currentQuestionId] || QUESTIONS.q03_anxiety;
+
+  document.getElementById("currentQuestionTitle").textContent = q.title;
+  document.getElementById("currentQuestionPrompt").textContent = q.prompt;
+
+  const box = document.getElementById("currentQuestionOptions");
+  box.innerHTML = "";
+
+  q.options.forEach(([key, text]) => {
+    const button = document.createElement("button");
+
+    if (q.type === "traffic") {
+      button.className = "option-btn";
+      button.innerHTML = `<span class="option-key">${key === "green" ? "綠" : key === "yellow" ? "黃" : "紅"}</span>${text}`;
+      button.onclick = () => submitResponse(currentQuestionId, "traffic", key);
+    } else {
+      button.className = "option-btn";
+      button.innerHTML = `<span class="option-key">${key}</span>${text}`;
+      button.onclick = () => submitResponse(currentQuestionId, "choice", key);
+    }
+
+    box.appendChild(button);
+  });
+
+  restoreSubmittedState();
+}    
+    const CONFIG = window.INTERACTION_CONFIG || {};
+    const GAS_ENDPOINT = CONFIG.GAS_ENDPOINT || "";
+    const SESSION_ID = CONFIG.SESSION_ID || "gender-seminar-2026";
+
+    const QUESTIONS = {
+  q03_anxiety: {
+    title: "暖身投票",
+    prompt: "第一時間，你最擔心的是什麼？",
+    type: "choice",
+    options: [
+      ["A", "要不要通報？"],
+      ["B", "家長會不會爆炸？"],
+      ["C", "程序有沒有錯？"],
+      ["D", "我是不是踩法規？"]
+    ]
+  },
+  q12_first_words: {
+    title: "快問快答｜第一句話",
+    prompt: "學生說出事件後，第一句話最適合？",
+    type: "choice",
+    options: [
+      ["A", "謝謝你願意說"],
+      ["B", "你確定嗎？"],
+      ["C", "他不是那種人"],
+      ["D", "你是不是誤會？"]
+    ]
+  },
+  q20_case_first_step: {
+    title: "案例投票",
+    prompt: "案例討論時，第一步最不適合做什麼？",
+    type: "choice",
+    options: [
+      ["A", "先接住情緒"],
+      ["B", "確認安全"],
+      ["C", "客觀紀錄"],
+      ["D", "找雙方自行對質"]
+    ]
+  },
+  q_flow_status: {
+    title: "三色回饋",
+    prompt: "聽到這裡，你對「第一時間怎麼做」的狀態是？",
+    type: "traffic",
+    options: [
+      ["green", "綠｜我知道下一步"],
+      ["yellow", "黃｜我還不確定"],
+      ["red", "紅｜我會想先停下來求助"]
+    ]
+  }
+};
+
+let currentQuestionId = "q03_anxiety";
+
+function jsonp(url) {
+  return new Promise((resolve, reject) => {
+    const callbackName = "jsonpCallback_" + Date.now() + "_" + Math.round(Math.random() * 10000);
+    const script = document.createElement("script");
+
+    window[callbackName] = (data) => {
+      resolve(data);
+      cleanup();
+    };
+
+    function cleanup() {
+      delete window[callbackName];
+      if (script.parentNode) script.parentNode.removeChild(script);
+    }
+
+    script.onerror = () => {
+      cleanup();
+      reject(new Error("JSONP 載入失敗"));
+    };
+
+    const sep = url.includes("?") ? "&" : "?";
+    script.src = url + sep + "callback=" + encodeURIComponent(callbackName) + "&_=" + Date.now();
+    document.body.appendChild(script);
+  });
+}
+
+async function loadCurrentQuestion() {
+  if (!GAS_ENDPOINT || GAS_ENDPOINT.includes("請填入")) return;
+
+  try {
+    const url = GAS_ENDPOINT + "?action=current&session_id=" + encodeURIComponent(SESSION_ID);
+    const data = await jsonp(url);
+
+    if (data && data.question_id && QUESTIONS[data.question_id]) {
+      if (currentQuestionId !== data.question_id) {
+        currentQuestionId = data.question_id;
+        renderCurrentQuestion();
+      }
+    }
+  } catch (err) {
+    console.warn("目前題目讀取失敗", err);
+  }
+}
+
+    const SUBMITTED_KEY = "gender_seminar_submitted_questions";
+    const submittedQuestions = new Set(
+      JSON.parse(sessionStorage.getItem(SUBMITTED_KEY) || "[]")
+);
+
+function saveSubmittedQuestions() {
+  sessionStorage.setItem(
+    SUBMITTED_KEY,
+    JSON.stringify(Array.from(submittedQuestions))
+  );
+}
+
+function disableQuestionButtons(questionId) {
+  if (questionId !== currentQuestionId) return;
+
+  const buttons = document.querySelectorAll("#currentQuestionOptions button");
+  buttons.forEach((button) => {
+    button.disabled = true;
+    button.style.opacity = "0.55";
+    button.style.cursor = "not-allowed";
+  });
+}
+
+function restoreSubmittedState() {
+  if (submittedQuestions.has(currentQuestionId)) {
+    disableQuestionButtons(currentQuestionId);
+  }
+}
+
+    document.getElementById("eventTitle").textContent = CONFIG.EVENT_TITLE || "校園性別事件處理實務";
+
+    function showStatus(text) {
+      const el = document.getElementById("status");
+      el.textContent = text;
+      el.classList.add("show");
+      setTimeout(() => el.classList.remove("show"), 1800);
+    }
+
+    function sanitizeMessage(text) {
+      return String(text || "")
+        .replace(/[<>]/g, "")
+        .replace(/\s+/g, " ")
+        .trim()
+        .slice(0, 50);
+    }
+
+    function submitResponse(questionId, responseType, answer) {
+      if (submittedQuestions.has(questionId)) {
+        showStatus("本題已送出，謝謝！");
+        return;
+      }
+
+      if (!GAS_ENDPOINT || GAS_ENDPOINT.includes("請填入")) {
+        showStatus("尚未設定 GAS_ENDPOINT");
+        return;
+      }
+
+      submittedQuestions.add(questionId);
+      saveSubmittedQuestions();
+      disableQuestionButtons(questionId);
+      
+      const payload = {
+        session_id: SESSION_ID,
+        question_id: questionId,
+        response_type: responseType,
+        answer: answer,
+        message: ""
+      };
+
+      fetch(GAS_ENDPOINT, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+      });
+
+      showStatus("已送出，謝謝！");
+    }
+
+    function submitMessage() {
+      const input = document.getElementById("messageInput");
+      const message = sanitizeMessage(input.value);
+
+      if (!message) {
+        showStatus("請先輸入一句話");
+        return;
+      }
+
+      if (!GAS_ENDPOINT || GAS_ENDPOINT.includes("請填入")) {
+        showStatus("尚未設定 GAS_ENDPOINT");
+        return;
+      }
+
+      const payload = {
+        session_id: SESSION_ID,
+        question_id: "q_final_message",
+        response_type: "message",
+        answer: "",
+        message: message
+      };
+
+      fetch(GAS_ENDPOINT, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+      });
+
+      input.value = "";
+      showStatus("匿名留言已送出");
+    }
+
+  renderCurrentQuestion();
+  restoreSubmittedState();
+  
+  loadCurrentQuestion();
+  setInterval(loadCurrentQuestion, 3000);
+  </script>
+</body>
+</html>
