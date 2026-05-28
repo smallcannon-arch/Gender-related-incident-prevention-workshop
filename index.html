@@ -153,7 +153,7 @@ h1{font-size:clamp(38px,4.6vw,76px);line-height:1.16;margin:0;font-weight:800;le
 </section>
 </div>
 <div class="notes" id="notes"><h3>講者備忘</h3><div id="noteText"></div></div>
-<div class="hud"><div>← → / Space 換頁　N 講者備忘　F 全螢幕　G 總覽　D 統計頁　P 列印</div><div id="pageNo"></div></div><div class="bar" id="bar"></div>
+<div class="hud"><div>← → / Space 換頁　N 講者備忘　F 全螢幕　G 總覽　D 統計頁　R 重新同步互動題　P 列印</div><div id="pageNo"></div></div><div class="bar" id="bar"></div>
 <script>
 const slides=[...document.querySelectorAll('.slide')];let i=0;const notes=document.getElementById('notes');const noteText=document.getElementById('noteText');
 const CONFIG = window.INTERACTION_CONFIG || {};
@@ -161,16 +161,32 @@ const GAS_ENDPOINT = CONFIG.GAS_ENDPOINT || "";
 const SESSION_ID = CONFIG.SESSION_ID || "gender-seminar-2026";
 
 let lastSyncedQuestionId = "";
+let syncRetryTimers = [];
 
-function syncCurrentQuestion(slide) {
+function clearSyncRetryTimers() {
+  syncRetryTimers.forEach(timer => clearTimeout(timer));
+  syncRetryTimers = [];
+}
+
+function sendCurrentQuestionPayload(payload) {
+  fetch(GAS_ENDPOINT, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(payload)
+  }).catch(err => console.warn("互動題同步失敗", err));
+}
+
+function syncCurrentQuestion(slide, force = false) {
   const questionId = slide.dataset.questionId;
   const title = slide.dataset.questionTitle || "";
 
   if (!questionId) return;
   if (!GAS_ENDPOINT || GAS_ENDPOINT.includes("請填入")) return;
-  if (questionId === lastSyncedQuestionId) return;
+  if (!force && questionId === lastSyncedQuestionId) return;
 
   lastSyncedQuestionId = questionId;
+  clearSyncRetryTimers();
 
   const payload = {
     action: "set_current",
@@ -179,12 +195,20 @@ function syncCurrentQuestion(slide) {
     title: title
   };
 
-  fetch(GAS_ENDPOINT, {
-    method: "POST",
-    mode: "no-cors",
-    headers: { "Content-Type": "text/plain;charset=utf-8" },
-    body: JSON.stringify(payload)
+  [0, 1000, 3000].forEach(delay => {
+    if (delay === 0) {
+      sendCurrentQuestionPayload(payload);
+      return;
+    }
+
+    syncRetryTimers.push(setTimeout(() => {
+      sendCurrentQuestionPayload(payload);
+    }, delay));
   });
+}
+
+function resyncCurrentQuestion() {
+  syncCurrentQuestion(slides[i], true);
 }
 function audienceUrl(){try{return new URL('audience.html', location.href).href}catch(e){return 'audience.html'}}
 ['audienceUrl1','audienceUrl2','audienceUrl3'].forEach(id=>{const el=document.getElementById(id); if(el) el.textContent='聽眾頁：'+audienceUrl();});
@@ -220,7 +244,7 @@ function show(n) {
   syncCurrentQuestion(slides[i]);
 }
 function next(){show(i+1)} function prev(){show(i-1)}
-document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();next()} if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();prev()} if(e.key==='Home')show(0); if(e.key==='End')show(slides.length-1); if(e.key.toLowerCase()==='n')notes.classList.toggle('show'); if(e.key.toLowerCase()==='f'){document.documentElement.requestFullscreen?.()} if(e.key.toLowerCase()==='g'){document.body.classList.toggle('overview')} if(e.key.toLowerCase()==='p')window.print();if(e.key.toLowerCase()==='d'){
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();next()} if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();prev()} if(e.key==='Home')show(0); if(e.key==='End')show(slides.length-1); if(e.key.toLowerCase()==='n')notes.classList.toggle('show'); if(e.key.toLowerCase()==='f'){document.documentElement.requestFullscreen?.()} if(e.key.toLowerCase()==='g'){document.body.classList.toggle('overview')} if(e.key.toLowerCase()==='r'){resyncCurrentQuestion()} if(e.key.toLowerCase()==='p')window.print();if(e.key.toLowerCase()==='d'){
   window.open(dashboardUrl(), '_blank', 'noopener');
 } if(e.key==='Escape'&&document.body.classList.contains('overview'))document.body.classList.remove('overview')});
 document.addEventListener('click',e=>{if(document.body.classList.contains('overview')){const s=e.target.closest('.slide'); if(s){document.body.classList.remove('overview');show(slides.indexOf(s));}}});
