@@ -363,7 +363,9 @@ function normalizeQuestionId(questionId) {
 
 const CURRENT_QUESTION_KEY = "gender_seminar_current_question";
 const LIVE_QUESTION_KEY = "gender_seminar_live_question";
+const CURRENT_QUESTION_POLL_MS = 1000;
 let questionChannel = null;
+let currentQuestionLoading = false;
 
 function getLiveCurrentQuestion() {
   try {
@@ -477,14 +479,19 @@ function jsonp(url, timeoutMs = 4500) {
 
 async function loadCurrentQuestion() {
   if (!GAS_ENDPOINT || GAS_ENDPOINT.includes("請填入")) return;
+  if (currentQuestionLoading) return;
+
+  currentQuestionLoading = true;
 
   try {
     const url = GAS_ENDPOINT + "?action=current&session_id=" + encodeURIComponent(SESSION_ID);
-    const data = await jsonp(url);
+    const data = await jsonp(url, 2200);
 
     applyCurrentQuestionData(data);
   } catch (err) {
     console.warn("目前題目讀取失敗", err);
+  } finally {
+    currentQuestionLoading = false;
   }
 }
 
@@ -571,9 +578,10 @@ function restoreSubmittedState() {
   applyCurrentQuestionData(getLiveCurrentQuestion());
   renderCurrentQuestion();
   restoreSubmittedState();
-  
+
   loadCurrentQuestion();
-  setInterval(loadCurrentQuestion, 3000);
+  setTimeout(loadCurrentQuestion, 250);
+  setInterval(loadCurrentQuestion, CURRENT_QUESTION_POLL_MS);
   </script>
 </body>
 </html>

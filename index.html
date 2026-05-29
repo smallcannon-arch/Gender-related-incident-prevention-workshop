@@ -162,8 +162,9 @@ function syncCurrentQuestion(slide, force = false, robust = false) {
   };
 
   publishLocalCurrentQuestion(payload);
+  sendCurrentQuestionPayload(payload);
 
-  const delays = robust ? [80, 1100, 3100] : [250, 1600];
+  const delays = robust ? [700, 1800, 3600] : [900, 2400];
 
   delays.forEach(delay => {
     syncRetryTimers.push(setTimeout(() => {
