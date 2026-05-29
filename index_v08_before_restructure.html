@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>一通電話之後｜校園性別事件的實務現場</title>
+<style>
+:root{
+  --navy:#1A2740; --navy2:#243447; --cream:#F5F1EA; --warm:#F8F3E8;
+  --grey:#333333; --line:#C9C7C0; --muted:#6f7682; --accent:#C8B68B;
+  --red:#6E3A3A; --green:#3F5D4A; --yellow:#8A6A35;
+}
+*{box-sizing:border-box} html,body{margin:0;height:100%;background:#0f1724;color:var(--warm);font-family:"Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;overflow:hidden}
+.deck{position:fixed;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 50% 40%,#1d2b45,#0c121d 70%)}
+.slide{position:absolute;width:min(100vw,177.777vh);height:min(56.25vw,100vh);aspect-ratio:16/9;background:var(--cream);color:var(--navy);overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.45);display:none}
+.slide.active{display:block}.bg{position:absolute;inset:0;background-position:center;background-size:cover}.shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,16,28,.55),rgba(10,16,28,.08))}.content{position:relative;z-index:2;width:100%;height:100%;padding:6.2% 7.2%;display:flex;flex-direction:column}.full-center{align-items:center;justify-content:center;text-align:center}.deep{background:var(--navy);color:var(--warm)}
+h1{font-size:clamp(38px,4.6vw,76px);line-height:1.16;margin:0;font-weight:800;letter-spacing:.02em}h2{font-size:clamp(30px,3.2vw,52px);line-height:1.25;margin:0;font-weight:800}.kicker{font-size:clamp(15px,1.2vw,22px);opacity:.75;letter-spacing:.12em;margin-bottom:1.1rem}.sub{font-size:clamp(20px,1.85vw,32px);line-height:1.55;opacity:.9;margin-top:1.3rem}.small{font-size:clamp(14px,1vw,18px);opacity:.75}.quote{font-size:clamp(40px,4.2vw,66px);line-height:1.35;font-weight:800;letter-spacing:.02em}.quote-small{font-size:clamp(20px,1.65vw,28px);line-height:1.6;opacity:.85;margin-top:1.7rem}.title-top{position:absolute;left:6.5%;top:6%;font-size:clamp(28px,3vw,44px);font-weight:800;color:var(--navy);z-index:4}.title-top.deep-title{color:var(--warm)}
+.table{margin-top:7rem;border-top:1.5px solid var(--line);width:86%;font-size:clamp(20px,1.7vw,30px);align-self:center}.row{display:grid;grid-template-columns:1fr 2.1fr;border-bottom:1.5px solid var(--line)}.cell{padding:1.05rem 1.2rem}.head{font-weight:800;color:var(--navy2);background:rgba(255,255,255,.18)}
+.flow{display:flex;gap:.55rem;align-items:center;justify-content:center;margin:auto 2rem;font-size:clamp(16px,1.22vw,23px)}.node{border:1.5px solid rgba(26,39,64,.45);border-radius:18px;padding:.75rem .9rem;min-width:7.5rem;text-align:center;background:rgba(255,255,255,.35)}.arrow{opacity:.55;font-size:1.4em}.photo-note{text-align:center;margin-bottom:5rem;color:var(--muted);font-size:clamp(16px,1.1vw,20px)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:7rem}.panel{border:1.5px solid var(--line);border-radius:24px;padding:2rem 2.2rem;background:rgba(255,255,255,.24);min-height:20rem}.panel h3{font-size:clamp(26px,2.4vw,40px);margin:0 0 1rem}.panel ul{font-size:clamp(23px,2vw,34px);line-height:1.85;margin:.5rem 0 0;padding-left:1.4em}.no h3{color:var(--red)}.yes h3{color:var(--green)}
+.grid4{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem;margin:auto;width:72%}.card{border:1.5px solid var(--line);border-radius:24px;padding:2rem;text-align:center;background:rgba(255,255,255,.26);font-size:clamp(28px,2.6vw,44px);font-weight:800;min-height:8rem;display:grid;place-items:center}.compare{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin:auto;width:82%}.example{font-size:clamp(25px,2.1vw,36px);line-height:1.6;margin-top:2rem;padding:2rem;border-left:5px solid var(--accent);background:rgba(255,255,255,.3)}
+.anchor{position:absolute;left:7%;right:7%;bottom:5%;display:flex;align-items:center;justify-content:center;gap:.35rem;z-index:5;color:rgba(26,39,64,.64);font-size:clamp(11px,.85vw,15px)}.anchor.deep-anchor{color:rgba(248,243,232,.7)}.anchor span{border:1px solid currentColor;border-radius:999px;padding:.32rem .55rem;background:rgba(245,241,234,.45)}.anchor.deep-anchor span{background:rgba(10,16,28,.3)}.anchor .hot{background:var(--navy);color:var(--warm);border-color:var(--navy)}.anchor.deep-anchor .hot{background:var(--warm);color:var(--navy);border-color:var(--warm)}
+.iceberg{position:relative;margin:auto;width:66%;height:62%;border-top:3px solid rgba(36,52,71,.35)}.ice-top{position:absolute;left:36%;top:-18%;width:28%;height:30%;background:linear-gradient(160deg,#d7e0e6,#9eb2c0);clip-path:polygon(50% 0,100% 100%,0 100%)}.ice-under{position:absolute;left:24%;top:10%;width:52%;height:68%;background:linear-gradient(180deg,#9bb0bf,#657d90);clip-path:polygon(50% 100%,100% 0,0 0);opacity:.85}.ice-text-top{position:absolute;top:-25%;left:0;right:0;text-align:center;font-size:clamp(30px,2.8vw,46px);font-weight:800}.ice-labels{position:absolute;top:22%;left:0;right:0;display:grid;grid-template-columns:repeat(5,1fr);gap:.8rem}.ice-labels div{background:rgba(255,255,255,.7);border:1px solid var(--line);border-radius:999px;padding:.7rem;text-align:center;font-size:clamp(16px,1.2vw,22px)}
+.casebox{margin:auto auto 1rem;width:76%;padding:2.3rem 2.6rem;border:1.5px solid var(--line);border-radius:28px;background:rgba(255,255,255,.32);font-size:clamp(22px,1.75vw,31px);line-height:1.75}.prompt{font-size:clamp(30px,2.7vw,46px);font-weight:800;text-align:center;margin-bottom:5rem}.risk{margin:auto;text-align:center;width:84%}.risk .main{font-size:clamp(38px,3.8vw,64px);font-weight:900;line-height:1.35}.risk ul{margin:3rem auto 0;display:flex;gap:1.1rem;justify-content:center;list-style:none;padding:0}.risk li{border:1.5px solid var(--line);border-radius:999px;padding:.9rem 1.2rem;font-size:clamp(18px,1.3vw,23px);background:rgba(255,255,255,.25)}
+.interact{background:var(--navy);color:var(--warm)}.interact .content{padding:5.5% 7%}.phone-tag{position:absolute;right:6.5%;top:7%;border:1px solid rgba(248,243,232,.35);border-radius:999px;padding:.55rem .9rem;color:rgba(248,243,232,.78);font-size:clamp(14px,1vw,18px)}.activity{display:grid;grid-template-columns:1.1fr .9fr;gap:3rem;align-items:center;height:100%}.activity h2{font-size:clamp(38px,4vw,66px);color:var(--warm)}.activity p{font-size:clamp(20px,1.55vw,28px);line-height:1.65;color:rgba(248,243,232,.82)}.options{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.opt{border:1.5px solid rgba(248,243,232,.35);border-radius:22px;padding:1.2rem;background:rgba(255,255,255,.06);font-size:clamp(20px,1.5vw,28px);font-weight:800}.urlbox{margin-top:1.4rem;padding:1rem 1.2rem;background:rgba(255,255,255,.08);border:1px solid rgba(248,243,232,.25);border-radius:16px;font-size:clamp(15px,1.1vw,20px);word-break:break-all}.timer{font-size:clamp(80px,8vw,140px);font-weight:900;text-align:center;color:var(--accent)}
+.qr-mini {
+  margin-top: 1.4rem;
+  display: inline-block;
+  background: #F5F1EA;
+  border-radius: 22px;
+  padding: 18px;
+  box-shadow: 0 18px 44px rgba(0,0,0,.28);
+}
+
+.qr-mini img {
+  display: block;
+  width: min(22vw, 260px);
+  height: auto;
+}
+
+.qr-mini .qr-caption {
+  margin-top: .65rem;
+  color: #1A2740;
+  font-size: clamp(13px,.9vw,16px);
+  text-align: center;
+  opacity: .78;
+}
+.hud{position:fixed;left:18px;right:18px;bottom:14px;display:flex;justify-content:space-between;align-items:center;color:rgba(255,255,255,.62);font-size:13px;z-index:99;pointer-events:none}.bar{position:fixed;left:0;bottom:0;height:4px;background:var(--accent);z-index:100;transition:width .25s}.notes{position:fixed;right:18px;top:18px;width:min(420px,34vw);max-height:72vh;overflow:auto;background:rgba(11,17,27,.92);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:1rem 1.2rem;color:#fff;z-index:120;display:none;box-shadow:0 18px 50px rgba(0,0,0,.35)}.notes.show{display:block}.notes h3{margin:.2rem 0 .8rem}.overview .slide{display:block;position:relative;width:320px;height:180px;transform:none!important;margin:14px;box-shadow:0 10px 30px rgba(0,0,0,.35)}.overview .deck{display:flex;align-content:flex-start;justify-content:center;flex-wrap:wrap;overflow:auto;padding:30px}.overview .slide.active{outline:4px solid var(--accent)}.overview .hud,.overview .bar{display:none}
+@media print{html,body{overflow:visible;background:#fff}.deck{display:block;position:static;background:#fff}.slide{display:block;position:relative;width:297mm;height:167mm;page-break-after:always;box-shadow:none}.hud,.bar,.notes{display:none}}
+
+  .final-qr-box {
+  margin-top: 2.2rem;
+  background: #F5F1EA;
+  border-radius: 28px;
+  padding: 26px 26px 18px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .32);
+  display: inline-block;
+}
+
+.final-qr-box img {
+  width: min(34vw, 420px);
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.final-qr-caption {
+  margin-top: 12px;
+  color: #1A2740;
+  font-size: clamp(16px, 1.2vw, 22px);
+  font-weight: 700;
+  text-align: center;
+}
+
+.final-qr-note {
+  margin-top: 1.4rem;
+  max-width: 760px;
+  line-height: 1.7;
+  color: rgba(248, 243, 232, .72);
+}
+
+
+/* ===== V2 extension: AI visual layers + editable HTML text ===== */
+:root{
+  --mac-almond:#F4D9C6;
+  --mac-mint:#CFE8DD;
+  --mac-blue:#C9D8E8;
+  --mac-coral:#EFB8B2;
+  --mac-lav:#D8CDE8;
+  --ink:#182235;
+}
+.slide.visual{background:#111927;color:var(--warm)}
+.slide.visual .bg{filter:saturate(.96) contrast(1.02)}
+.slide.visual .vshade{position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(9,14,25,.78) 0%,rgba(9,14,25,.54) 42%,rgba(9,14,25,.18) 100%)}
+.slide.visual.right .vshade{background:linear-gradient(270deg,rgba(9,14,25,.76) 0%,rgba(9,14,25,.46) 46%,rgba(9,14,25,.08) 100%)}
+.slide.visual.soft .vshade{background:linear-gradient(90deg,rgba(245,241,234,.90) 0%,rgba(245,241,234,.74) 56%,rgba(245,241,234,.18) 100%)}
+.slide.visual.soft{color:var(--navy)}
+.v-wrap{position:relative;z-index:2;height:100%;padding:5.7% 7.2%;display:flex;flex-direction:column;justify-content:center;gap:1rem;max-width:62%}
+.visual.right .v-wrap{margin-left:auto;max-width:58%}
+.visual.center .v-wrap{margin:auto;max-width:78%;text-align:center;align-items:center}
+.visual.soft .v-wrap{max-width:66%}
+.v-pill{display:inline-flex;align-items:center;width:max-content;border:1px solid rgba(248,243,232,.45);border-radius:999px;padding:.45rem .75rem;color:rgba(248,243,232,.82);font-size:clamp(13px,.9vw,17px);letter-spacing:.12em;background:rgba(255,255,255,.06);backdrop-filter:blur(8px)}
+.soft .v-pill{border-color:rgba(26,39,64,.22);color:rgba(26,39,64,.66);background:rgba(255,255,255,.36)}
+.v-title{font-size:clamp(38px,4.3vw,74px);line-height:1.22;font-weight:900;letter-spacing:.02em;text-wrap:balance}
+.v-sub{font-size:clamp(18px,1.55vw,28px);line-height:1.65;opacity:.86;max-width:820px;text-wrap:balance}
+.v-line{width:110px;height:3px;background:var(--mac-almond);border-radius:999px;margin:1rem 0 .2rem}.center .v-line{margin-left:auto;margin-right:auto}
+.v-card{border:1px solid rgba(248,243,232,.25);border-radius:28px;background:rgba(245,241,234,.13);box-shadow:0 24px 80px rgba(0,0,0,.25);padding:1.6rem 1.8rem;backdrop-filter:blur(14px)}
+.soft .v-card{background:rgba(255,255,255,.58);border-color:rgba(26,39,64,.14);box-shadow:0 18px 60px rgba(26,39,64,.12)}
+.path-dots{position:absolute;z-index:5;left:7%;right:7%;bottom:5.2%;display:flex;gap:.42rem;justify-content:center;color:rgba(248,243,232,.62);font-size:clamp(10px,.78vw,14px);pointer-events:none}.path-dots span{border:1px solid currentColor;border-radius:999px;padding:.26rem .48rem;background:rgba(10,16,28,.32)}.path-dots .on{background:var(--warm);color:var(--navy);border-color:var(--warm)}
+.slide.paper{background:linear-gradient(135deg,#F8F3E8,#EFE7D8);color:var(--navy)}
+.paper .content{padding:5.4% 6.6%}.paper h2{font-size:clamp(34px,3.2vw,56px)}
+.ribbon{display:inline-block;border-radius:999px;background:rgba(26,39,64,.08);border:1px solid rgba(26,39,64,.14);padding:.48rem .82rem;font-size:clamp(13px,.9vw,17px);letter-spacing:.10em;color:rgba(26,39,64,.66);width:max-content;margin-bottom:1.1rem}
+.tool-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.1rem;margin-top:2rem}.tool-grid.three{grid-template-columns:repeat(3,1fr)}.tool-grid.five{grid-template-columns:repeat(5,1fr)}
+.tool-card{border:1.5px solid rgba(26,39,64,.13);border-radius:24px;background:rgba(255,255,255,.46);padding:1.25rem 1.35rem;min-height:130px;box-shadow:0 16px 40px rgba(26,39,64,.08)}.tool-card h3{font-size:clamp(21px,1.7vw,32px);margin:.05rem 0 .55rem;color:var(--navy);line-height:1.25}.tool-card p{font-size:clamp(15px,1.05vw,20px);line-height:1.55;margin:0;color:rgba(26,39,64,.76)}
+.tag-dot{display:inline-grid;place-items:center;width:2rem;height:2rem;border-radius:999px;margin-bottom:.6rem;font-weight:900;color:#1A2740;background:var(--mac-almond)}.mint{background:var(--mac-mint)}.blue{background:var(--mac-blue)}.coral{background:var(--mac-coral)}.lav{background:var(--mac-lav)}
+.compare-clean{display:grid;grid-template-columns:1fr 1fr;gap:1.3rem;margin-top:2rem}.compare-card{border-radius:28px;padding:1.6rem 1.7rem;border:1.5px solid rgba(26,39,64,.13);background:rgba(255,255,255,.52);min-height:310px}.compare-card h3{font-size:clamp(28px,2.2vw,42px);margin:0 0 1rem}.compare-card ul{font-size:clamp(18px,1.3vw,25px);line-height:1.75;margin:0;padding-left:1.1em}.bad h3{color:#793D3D}.good h3{color:#3E614A}
+.flowline{display:grid;grid-template-columns:repeat(6,1fr);gap:.75rem;margin-top:2.2rem;align-items:stretch}.flow-step{border-radius:24px;padding:1.2rem 1rem;background:rgba(255,255,255,.48);border:1px solid rgba(26,39,64,.13);text-align:center}.flow-step .num{display:inline-grid;place-items:center;width:42px;height:42px;border-radius:50%;background:var(--mac-blue);font-weight:900;margin-bottom:.65rem}.flow-step h3{font-size:clamp(17px,1.25vw,24px);line-height:1.35;margin:.2rem 0 .45rem}.flow-step p{font-size:clamp(13px,.9vw,17px);line-height:1.45;margin:0;color:rgba(26,39,64,.68)}
+.matrix{display:grid;grid-template-columns:1.05fr .95fr;gap:2rem;align-items:center;margin-top:2.2rem}.matrix .bigcard{border-radius:32px;background:rgba(255,255,255,.48);border:1.5px solid rgba(26,39,64,.13);padding:2rem;min-height:330px}.matrix .bigcard .huge{font-size:clamp(34px,3vw,54px);font-weight:900;line-height:1.35}.matrix .side-list{display:grid;gap:.8rem}.side-item{border-radius:20px;background:rgba(255,255,255,.50);border:1px solid rgba(26,39,64,.12);padding:1rem 1.15rem;font-size:clamp(17px,1.25vw,24px);font-weight:800}.case-three{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2rem}.case-col{border-radius:26px;background:rgba(255,255,255,.50);border:1.5px solid rgba(26,39,64,.12);padding:1.35rem}.case-col h3{font-size:clamp(26px,2vw,38px);margin:0 0 .8rem}.case-col p{font-size:clamp(17px,1.2vw,22px);line-height:1.6;margin:0;color:rgba(26,39,64,.78)}
+.redyellowgreen{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2rem}.status-card{border-radius:28px;padding:1.4rem;text-align:center;background:rgba(255,255,255,.62);border:1.5px solid rgba(26,39,64,.12)}.status-card .status{font-size:clamp(42px,4vw,76px);font-weight:900;line-height:1}.status-card h3{font-size:clamp(22px,1.7vw,34px);margin:.65rem 0 .4rem}.status-card p{font-size:clamp(15px,1vw,19px);line-height:1.55;margin:0;color:rgba(26,39,64,.70)}
+.dark-tool{background:var(--navy);color:var(--warm)}.dark-tool .tool-card{background:rgba(255,255,255,.08);border-color:rgba(248,243,232,.18)}.dark-tool .tool-card h3{color:var(--warm)}.dark-tool .tool-card p{color:rgba(248,243,232,.74)}
+
+
+/* ===== V3 refinement: consistent section map + process diagrams ===== */
+.path-dots{
+  left:6.2% !important;
+  right:6.2% !important;
+  bottom:4.3% !important;
+  justify-content:center !important;
+  align-items:center !important;
+  gap:.52rem !important;
+  color:rgba(248,243,232,.72) !important;
+  font-size:clamp(11px,.82vw,15px) !important;
+}
+.path-dots::before{
+  content:"研習地圖";
+  border:0;
+  background:transparent;
+  letter-spacing:.12em;
+  margin-right:.35rem;
+  opacity:.62;
+  font-weight:800;
+}
+.path-dots span{
+  min-width:3.8rem;
+  text-align:center;
+  border:1px solid rgba(248,243,232,.34) !important;
+  border-radius:999px !important;
+  padding:.32rem .64rem !important;
+  color:rgba(248,243,232,.76) !important;
+  background:rgba(10,16,28,.28) !important;
+  box-shadow:none !important;
+}
+.path-dots .on{
+  background:var(--warm) !important;
+  color:var(--navy) !important;
+  border-color:var(--warm) !important;
+  box-shadow:0 10px 26px rgba(0,0,0,.18) !important;
+}
+.paper .path-dots,
+.slide.visual.soft .path-dots{
+  color:rgba(26,39,64,.64) !important;
+}
+.paper .path-dots::before,
+.slide.visual.soft .path-dots::before{
+  color:rgba(26,39,64,.56) !important;
+}
+.paper .path-dots span,
+.slide.visual.soft .path-dots span{
+  color:rgba(26,39,64,.60) !important;
+  border-color:rgba(26,39,64,.18) !important;
+  background:rgba(255,255,255,.46) !important;
+}
+.paper .path-dots .on,
+.slide.visual.soft .path-dots .on{
+  background:var(--navy) !important;
+  color:var(--warm) !important;
+  border-color:var(--navy) !important;
+}
+
+.process-page .content{padding:5.2% 6.2% 7.4%}
+.process-kicker{display:inline-flex;align-items:center;width:max-content;border-radius:999px;background:rgba(26,39,64,.08);border:1px solid rgba(26,39,64,.14);padding:.45rem .75rem;color:rgba(26,39,64,.66);letter-spacing:.12em;font-size:clamp(13px,.9vw,17px);margin-bottom:.85rem}
+.process-title{font-size:clamp(34px,3.25vw,58px);font-weight:900;line-height:1.18;margin:0;color:var(--navy)}
+.process-sub{font-size:clamp(18px,1.3vw,24px);line-height:1.55;color:rgba(26,39,64,.68);max-width:940px;margin:1rem 0 0}
+.process-rail{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:1.05rem;margin-top:2.55rem;position:relative;align-items:stretch}
+.process-rail::before{content:none}
+.process-step{position:relative;z-index:1;border-radius:26px;background:rgba(255,255,255,.60);border:1.5px solid rgba(26,39,64,.13);padding:1.12rem .9rem 1.05rem;text-align:center;box-shadow:0 18px 42px rgba(26,39,64,.08);min-height:184px}
+.process-step::after{content:"";position:absolute;right:-.72rem;top:50%;width:.86rem;height:.86rem;border-top:2px solid rgba(26,39,64,.32);border-right:2px solid rgba(26,39,64,.32);transform:translateY(-50%) rotate(45deg);background:transparent}
+.process-step:last-child::after{content:none}
+.process-badge{width:54px;height:54px;border-radius:50%;display:inline-grid;place-items:center;margin:0 auto .8rem;font-weight:900;color:var(--navy);background:var(--mac-almond);box-shadow:0 10px 28px rgba(26,39,64,.12)}
+.process-step:nth-child(2) .process-badge{background:var(--mac-mint)}
+.process-step:nth-child(3) .process-badge{background:var(--mac-blue)}
+.process-step:nth-child(4) .process-badge{background:var(--navy);color:var(--warm)}
+.process-step:nth-child(5) .process-badge{background:var(--mac-lav)}
+.process-step:nth-child(6) .process-badge{background:var(--mac-coral)}
+.process-step h3{font-size:clamp(19px,1.35vw,28px);line-height:1.28;margin:.1rem 0 .45rem;color:var(--navy)}
+.process-step p{font-size:clamp(13px,.92vw,17px);line-height:1.48;margin:0;color:rgba(26,39,64,.68)}
+.process-note{margin-top:1.35rem;display:inline-flex;gap:.7rem;align-items:center;border-radius:999px;background:rgba(26,39,64,.07);border:1px solid rgba(26,39,64,.12);padding:.6rem .9rem;font-size:clamp(14px,1vw,18px);color:rgba(26,39,64,.64)}
+.flowline{position:relative;gap:1rem !important}
+.flowline .flow-step{position:relative;padding:1.18rem .92rem 1.05rem;border-radius:26px;background:rgba(255,255,255,.54);box-shadow:0 16px 36px rgba(26,39,64,.07)}
+.flowline .flow-step:not(:last-child)::after{content:"→";position:absolute;right:-1rem;top:50%;transform:translateY(-50%);font-size:clamp(20px,1.4vw,30px);font-weight:800;color:rgba(26,39,64,.32)}
+.flowline .flow-step .num{box-shadow:0 8px 22px rgba(26,39,64,.10)}
+
+
+
+/* ===== V8 outline audit: unified student flow and reporting rule ===== */
+.course-map{position:absolute;z-index:6;left:6.2%;right:6.2%;bottom:4.4%;display:flex;align-items:center;justify-content:center;gap:.5rem;pointer-events:none;font-size:clamp(11px,.82vw,15px)}
+.course-map .course-label{font-weight:900;letter-spacing:.12em;margin-right:.3rem;white-space:nowrap;opacity:.78}
+.course-map span{min-width:3.82rem;text-align:center;border:1px solid currentColor;border-radius:999px;padding:.33rem .64rem;background:rgba(10,16,28,.30)}
+.course-map .on{background:var(--warm);color:var(--navy);border-color:var(--warm);box-shadow:0 10px 26px rgba(0,0,0,.18)}
+.course-map-dark{color:rgba(248,243,232,.78)}
+.course-map-light{color:rgba(26,39,64,.58)}
+.course-map-light span{background:rgba(255,255,255,.45)}
+.course-map-light .on{background:var(--navy);color:var(--warm);border-color:var(--navy)}
+.course-caption{position:absolute;z-index:6;left:7%;right:7%;bottom:1.6%;text-align:center;font-size:clamp(12px,.8vw,15px);letter-spacing:.04em;color:rgba(248,243,232,.54)}
+.path-dots{display:none !important}
+
+.map-split{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-top:2rem;align-items:stretch}.map-card{border-radius:30px;border:1.5px solid rgba(26,39,64,.13);background:rgba(255,255,255,.50);box-shadow:0 18px 48px rgba(26,39,64,.08);padding:1.45rem 1.55rem}.map-card h3{font-size:clamp(27px,2.05vw,40px);line-height:1.25;margin:.1rem 0 .45rem;color:var(--navy)}.map-card p{font-size:clamp(16px,1.08vw,21px);line-height:1.55;margin:.2rem 0 1rem;color:rgba(26,39,64,.68)}.map-note{margin-top:1.2rem;border-radius:999px;background:rgba(26,39,64,.07);border:1px solid rgba(26,39,64,.12);padding:.75rem 1rem;font-size:clamp(16px,1.08vw,21px);color:rgba(26,39,64,.68);text-align:center}.mini-course{display:flex;align-items:center;gap:.34rem;flex-wrap:wrap}.mini-course span{border-radius:999px;border:1px solid rgba(26,39,64,.24);padding:.32rem .55rem;font-size:clamp(13px,.92vw,17px);background:rgba(245,241,234,.52)}.mini-course .on{background:var(--navy);color:var(--warm);border-color:var(--navy)}
+
+.process-page .content{padding:5.1% 5.6%}.process-kicker{display:inline-flex;align-items:center;width:max-content;border-radius:999px;background:rgba(26,39,64,.08);border:1px solid rgba(26,39,64,.14);padding:.48rem .82rem;font-size:clamp(13px,.9vw,17px);letter-spacing:.10em;color:rgba(26,39,64,.66);margin-bottom:1.05rem}.process-title{font-size:clamp(36px,3.15vw,58px);line-height:1.22}.process-sub{font-size:clamp(17px,1.18vw,22px);line-height:1.65;max-width:1100px;color:rgba(26,39,64,.72);margin:1rem 0 1.5rem}.field-line{display:grid;grid-template-columns:1.05fr 30px 1fr 30px 1fr 30px 1fr 30px 1fr 30px 1fr 30px 1.1fr;align-items:stretch;gap:.45rem;margin-top:1.55rem}.field-node{border-radius:22px;border:1.5px solid rgba(26,39,64,.16);background:rgba(255,255,255,.50);box-shadow:0 16px 36px rgba(26,39,64,.06);padding:1rem .75rem;text-align:center;min-height:138px;display:flex;flex-direction:column;justify-content:center}.field-node.trigger{background:rgba(248,243,232,.34);border-style:dashed;color:rgba(26,39,64,.74)}.field-node h3{font-size:clamp(18px,1.28vw,27px);line-height:1.25;margin:.12rem 0 .42rem;color:var(--navy)}.field-node p{font-size:clamp(12px,.82vw,16px);line-height:1.42;margin:0;color:rgba(26,39,64,.62)}.field-index{display:inline-grid;place-items:center;align-self:center;width:34px;height:34px;border-radius:999px;background:rgba(26,39,64,.10);font-weight:900;margin-bottom:.5rem;color:var(--navy)}.field-arrow{display:grid;place-items:center;color:rgba(26,39,64,.35);font-size:clamp(22px,1.55vw,32px);font-weight:800}.field-summary{margin-top:1.15rem;display:inline-flex;gap:.55rem;align-items:center;border-radius:999px;background:rgba(26,39,64,.07);border:1px solid rgba(26,39,64,.12);padding:.62rem .9rem;font-size:clamp(14px,.98vw,18px);color:rgba(26,39,64,.66)}
+
+
+/* ===== V8 unified student flow ===== */
+.student-flow-page .content{padding:5.0% 5.6% 7.0%}
+.student-flow{display:flex;align-items:stretch;gap:.52rem;margin-top:1.65rem;width:100%}
+.student-card{flex:1 1 0;min-width:0;border-radius:24px;border:1.5px solid rgba(26,39,64,.15);background:rgba(255,255,255,.55);box-shadow:0 18px 40px rgba(26,39,64,.065);padding:1rem .72rem;text-align:center;display:flex;flex-direction:column;justify-content:center;min-height:150px;position:relative}
+.student-card.trigger{flex:1.05;background:rgba(26,39,64,.075);border-style:dashed;color:rgba(26,39,64,.76)}
+.student-card h3{font-size:clamp(17px,1.22vw,26px);line-height:1.24;margin:.12rem 0 .36rem;color:var(--navy);font-weight:900;letter-spacing:.02em}
+.student-card p{font-size:clamp(11px,.80vw,15px);line-height:1.42;margin:0;color:rgba(26,39,64,.64)}
+.student-badge{width:34px;height:34px;border-radius:999px;display:inline-grid;place-items:center;margin:0 auto .55rem;font-size:clamp(13px,.86vw,16px);font-weight:900;color:var(--navy);background:var(--mac-almond)}
+.student-card.s2 .student-badge{background:var(--mac-mint)}
+.student-card.s3 .student-badge{background:var(--mac-blue)}
+.student-card.s4 .student-badge{background:var(--mac-lav)}
+.student-card.s5 .student-badge{background:var(--navy);color:var(--warm)}
+.student-card.s6 .student-badge{background:var(--mac-coral)}
+.sf-arrow{display:grid;place-items:center;align-self:center;flex:0 0 22px;color:rgba(26,39,64,.34);font-size:clamp(18px,1.25vw,26px);font-weight:900;line-height:1}
+.student-flow-summary{margin-top:1.18rem;display:inline-flex;gap:.55rem;align-items:center;border-radius:999px;background:rgba(26,39,64,.07);border:1px solid rgba(26,39,64,.12);padding:.62rem .9rem;font-size:clamp(14px,.98vw,18px);color:rgba(26,39,64,.66)}
+
+.handoff-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:2rem}.handoff-card{border-radius:28px;border:1.5px solid rgba(26,39,64,.13);background:rgba(255,255,255,.52);box-shadow:0 16px 40px rgba(26,39,64,.07);padding:1.4rem 1.25rem;min-height:270px}.handoff-card .label{display:inline-flex;border-radius:999px;background:rgba(26,39,64,.08);padding:.38rem .66rem;font-size:clamp(12px,.85vw,16px);color:rgba(26,39,64,.62);font-weight:800;margin-bottom:.8rem}.handoff-card h3{font-size:clamp(25px,1.85vw,37px);line-height:1.25;margin:.1rem 0 .7rem;color:var(--navy)}.handoff-card p{font-size:clamp(16px,1.08vw,21px);line-height:1.58;margin:0;color:rgba(26,39,64,.72)}
+</style>
+<script src="./config.js"></script>
+</head>
+<body>
+<div class="deck" id="deck">
+<section class="slide active deep" data-notes="開場先慢。把焦點放在「一通電話之後」的第一時間，不急著談法條。"><div class="bg" style="background-image:url('assets/slides/01_cover.png')"></div></section>
+<section class="slide deep" data-notes="第二頁放研習地圖，只作為今天課程節奏的開場提示；不展開解釋，避免與現場流程混淆。"><div class="bg" style="background-image:url('assets/slides/02_opening_quote.png')"></div><div class="course-map course-map-dark"><div class="course-label">研習地圖</div><span class="on">開場</span><span class="">辨識</span><span class="">接住</span><span class="">紀錄</span><span class="">協作</span><span class="">演練</span><span class="">帶走</span></div></section><section class="slide interact" data-notes="第一次手機互動。請大家掃描 QR Code，進入匿名互動頁，選擇最接近自己現場感受的答案。" data-question-id="q03_anxiety" data-question-title="暖身投票"><div class="phone-tag">手機互動 01</div><div class="content"><div class="activity"><div><div class="kicker">30 秒暖身</div><h2>你最擔心哪一件事？</h2><p>請用手機掃描 QR Code，進入匿名互動頁。選擇一個最接近你現場感受的答案。這不是考試，只是讓我們看見第一線共同的焦慮。</p><div class="qr-mini"><img alt="聽眾互動頁 QR Code" src="assets/qr_audience.png"/><div class="qr-caption">掃描開啟聽眾互動頁</div></div></div><div class="options"><div class="opt">A 說錯話</div><div class="opt">B 判斷錯</div><div class="opt">C 家長爆炸</div><div class="opt">D 程序出錯</div></div></div></div></section>
+<section class="slide deep" data-notes="把焦慮正名：這些不是老師不專業，而是第一線真的會同時冒出的聲音。"><div class="bg" style="background-image:url('assets/slides/03_frontline_anxiety.png')"></div></section>
+<section class="slide" data-notes="定位：今天不是讓老師背法條，而是把第一時間的紅線和路標放清楚。"><div class="bg" style="background-image:url('assets/slides/04_not_law_class.png')"></div></section>
+<section class="slide deep" data-notes="段落轉場：先看地圖，什麼事情可能進入性別事件範圍。"><div class="bg" style="background-image:url('assets/slides/05_section_what_are_we_handling.png')"></div><div class="course-map course-map-dark"><div class="course-label">研習地圖</div><span class="">開場</span><span class="on">辨識</span><span class="">接住</span><span class="">紀錄</span><span class="">協作</span><span class="">演練</span><span class="">帶走</span></div></section>
+<section class="slide" data-notes="提醒：第一線不用判斷成立不成立，但要有敏感度。"><div class="bg" style="background-image:url('assets/slides/06_event_types.png')"></div></section>
+<section class="slide deep" data-notes="迷思一：玩笑不是免責牌。重點是與性或性別有關、不受歡迎、造成影響。"><div class="bg" style="background-image:url('assets/slides/07_myth_joking.png')"></div></section>
+<section class="slide deep" data-notes="迷思二：關係不等於同意。熟識、過去有好感，也不代表每次互動都被接受。"><div class="bg" style="background-image:url('assets/slides/08_myth_mutual_consent.png')"></div></section>
+<section class="slide deep" data-notes="迷思三：老師不是偵探。第一時間不是審問或確認真假，而是接住、紀錄、通報。"><div class="bg" style="background-image:url('assets/slides/09_myth_ask_before_report.png')"></div></section>
+<section class="slide visual right" data-notes="把前面三個迷思收成一個判斷：老師不用判決，但要讓制度開始。">
+<div class="bg" style="background-image:url('assets/visuals/02_opening_quote_wall.png')"></div><div class="vshade"></div>
+<div class="v-wrap"><div class="v-pill">小結｜事件辨識</div><div class="v-title">第一線不是判決者，<br/>而是啟動保護的人</div><div class="v-line"></div><div class="v-sub">真的走到現場時，先接住、先確認安全，再把必要資訊交給制度。</div></div></section>
+<section class="slide deep" data-notes="段落轉場：接下來進入核心實務。"><div class="bg" style="background-image:url('assets/slides/10_section_first_response.png')"></div><div class="course-map course-map-dark"><div class="course-label">研習地圖</div><span class="">開場</span><span class="">辨識</span><span class="on">接住</span><span class="">紀錄</span><span class="">協作</span><span class="">演練</span><span class="">帶走</span></div></section>
+<section class="slide interact" data-notes="第二次手機互動。請老師先想一句自己會說的話，再對照下一頁原則。" data-question-id="q12_first_sentence" data-question-title="第一句話"><div class="phone-tag">手機互動 02</div><div class="content"><div class="activity"><div><div class="kicker">快問快答</div><h2>學生說出事件後，第一句話怎麼接？</h2><p>請選出你覺得比較安全、能接住學生，也不會變成審問的第一句話。</p></div><div class="options"><div class="opt">A 你確定嗎？</div><div class="opt">B 為什麼現在才說？</div><div class="opt">C 謝謝你告訴我，我會先陪你確認安全。</div><div class="opt">D 你是不是誤會了？</div></div></div></div></section>
+<section class="slide paper process-page student-flow-page" data-notes="這頁統一學生開口後的現場處理線。重點：安全與接住優先；紀錄是簡要留痕，不是延後通報的理由。"><div class="content"><div class="process-kicker">現場處理線｜學生開口後</div><h2 class="process-title">學生開口後：先穩住，再交給制度</h2><p class="process-sub">第一線的任務不是查清真相，而是保護學生、保留必要資訊，並讓正式窗口接手。</p><div class="student-flow"><div class="student-card trigger"><h3>學生開口</h3><p>事件被說出、被看見，或由他人反映。</p></div><div class="sf-arrow">→</div><div class="student-card s1"><div class="student-badge">1</div><h3>接住情緒</h3><p>先聽見、先穩住，不急著判斷。</p></div><div class="sf-arrow">→</div><div class="student-card s2"><div class="student-badge">2</div><h3>確認安全</h3><p>確認是否需陪伴、隔離或立即支援。</p></div><div class="sf-arrow">→</div><div class="student-card s3"><div class="student-badge">3</div><h3>避免追問</h3><p>不問細節、不安排對質。</p></div><div class="sf-arrow">→</div><div class="student-card s4"><div class="student-badge">4</div><h3>簡要留痕</h3><p>記下原話、時間、地點、可見狀況。</p></div><div class="sf-arrow">→</div><div class="student-card s5"><div class="student-badge">5</div><h3>通報窗口</h3><p>依校內規定交給權責人員。</p></div><div class="sf-arrow">→</div><div class="student-card s6"><div class="student-badge">6</div><h3>制度接手</h3><p>補足紀錄，啟動正式處理與支持。</p></div></div><div class="student-flow-summary">重點：簡要留痕幫助說清楚；不能等紀錄完整才通報。</div></div></section>
+<section class="slide" data-notes="溫柔但要有力。孩子願意說出來，是在測試大人能不能接住。"><div class="bg" style="background-image:url('assets/slides/12_receive_emotion.png')"></div></section>
+<section class="slide paper" data-notes="這頁補在「第一句話」之後，讓老師可以直接帶走可使用語句。"><div class="content">
+<div class="ribbon">第一句話</div><h2>可以說的話：先接住，再處理</h2><p class="sub" style="color:rgba(26,39,64,.72);max-width:980px">第一句話不需要完美，但要讓學生知道：我聽見了，現在先確認安全。</p><div class="tool-grid"><div class="tool-card"><div class="tag-dot">1</div><h3>謝謝你告訴我</h3><p>先承接求助，不急著確認真假。</p></div><div class="tool-card"><div class="tag-dot mint">2</div><h3>我會先陪你確認安全</h3><p>把焦點放在當下安全與支持。</p></div><div class="tool-card"><div class="tag-dot blue">3</div><h3>我會記下你說的重點</h3><p>提醒紀錄，不展開偵訊。</p></div><div class="tool-card"><div class="tag-dot lav">4</div><h3>接下來會有學校制度協助</h3><p>不承諾保密，但承諾陪伴與處理。</p></div></div></div></section>
+<section class="slide" data-notes="善意踩雷。很多錯誤不是惡意，是太想趕快解決。"><div class="bg" style="background-image:url('assets/slides/13_avoid_these_actions.png')"></div></section>
+<section class="slide deep" data-notes="情緒高點。通報不是老師宣判誰對誰錯，是讓制度開始接手。"><div class="bg" style="background-image:url('assets/slides/15_report_not_conviction.png')"></div></section>
+<section class="slide" data-notes="重點句：寫你聽到的、看到的、知道的，不寫你猜的。"><div class="bg" style="background-image:url('assets/slides/14_objective_record.png')"></div></section>
+<section class="slide visual right" data-notes="新增段落轉場，把流程從第一時間帶到紀錄、通報與資訊邊界。">
+<div class="bg" style="background-image:url('assets/visuals/07_section_recording_risk.png')"></div><div class="vshade"></div>
+<div class="v-wrap"><div class="v-pill">章節｜通報與紀錄</div><div class="v-title">通報與紀錄：<br/>最容易卡住的地方</div><div class="v-line"></div><div class="v-sub">卡住不代表做錯；但卡住時，需要知道下一個穩定步驟。</div></div><div class="course-map course-map-dark"><div class="course-label">研習地圖</div><span class="">開場</span><span class="">辨識</span><span class="">接住</span><span class="on">紀錄</span><span class="">協作</span><span class="">演練</span><span class="">帶走</span></div></section>
+<section class="slide paper" data-notes="強調疑似即可進入機制，不要變成教師先判斷成立與否。"><div class="content">
+<div class="ribbon">通報判斷</div><h2>什麼時候需要啟動通報？</h2><p class="sub" style="color:rgba(26,39,64,.72);max-width:980px">第一線不必先完成事實認定；只要出現疑似校園性別事件線索，就應立即交給校內權責窗口。</p><div class="tool-grid"><div class="tool-card"><div class="tag-dot">1</div><h3>學生主動說出</h3><p>即使內容片段，也先保護、簡要留痕並交給窗口。</p></div><div class="tool-card"><div class="tag-dot mint">2</div><h3>家長或同學反映</h3><p>不要只當作一般糾紛私下處理。</p></div><div class="tool-card"><div class="tag-dot blue">3</div><h3>數位影像或訊息出現</h3><p>保存線索，避免散布。</p></div><div class="tool-card"><div class="tag-dot lav">4</div><h3>不確定是否屬性平事件</h3><p>先向學務、輔導或主管等權責窗口回報。</p></div></div></div></section>
+<section class="slide paper" data-notes="現場最實用的一頁：不確定時的低風險路徑。"><div class="content">
+<div class="ribbon">不確定時</div><h2>「我不確定是不是」時怎麼辦？</h2><p class="sub" style="color:rgba(26,39,64,.72);max-width:980px">不確定時，不是停在原地，也不是自己問到確定；而是先確認安全、簡要留痕，並交給能承接程序的位置。</p><div class="tool-grid"><div class="tool-card"><div class="tag-dot">A</div><h3>先確認安全</h3><p>學生是否需要陪伴、隔離或立即支持。</p></div><div class="tool-card"><div class="tag-dot mint">B</div><h3>簡要留痕</h3><p>保留原話、時間、地點、對象與可見狀況。</p></div><div class="tool-card"><div class="tag-dot blue">C</div><h3>交給權責窗口</h3><p>學務、輔導、主管或性平業務承辦。</p></div><div class="tool-card"><div class="tag-dot lav">D</div><h3>不要自行偵查</h3><p>不要為了確定而重複追問細節。</p></div></div></div></section>
+<section class="slide paper" data-notes="好紀錄不寫結論，只留下後續可以查核的資訊。"><div class="content"><div class="ribbon">紀錄範例</div><h2>好的紀錄 vs 有風險的紀錄</h2><div class="compare-clean"><div class="compare-card good"><h3>好的紀錄</h3><ul><li>甲生於 10:20 向導師表示：「……」</li><li>地點：三樓走廊近自然教室</li><li>當時甲生情緒哭泣、聲音顫抖</li><li>導師陪同至輔導室，並通知學務處</li></ul></div><div class="compare-card bad"><h3>有風險的紀錄</h3><ul><li>應該是乙生故意欺負甲生</li><li>甲生說法看起來不太合理</li><li>兩人平常就很曖昧</li><li>我覺得應該只是開玩笑</li></ul></div></div></div></section>
+<section class="slide paper" data-notes="把「不要調查」講成保護孩子、也保護老師。"><div class="content">
+<div class="ribbon">程序紅線</div><h2>為什麼不要自己調查？</h2><p class="sub" style="color:rgba(26,39,64,.72);max-width:980px">第一線的任務是穩住現場，不是把自己放進調查者的位置。</p><div class="tool-grid three"><div class="tool-card"><div class="tag-dot coral">1</div><h3>避免誘導或污染陳述</h3><p>重複追問可能影響後續調查品質。</p></div><div class="tool-card"><div class="tag-dot lav">2</div><h3>避免造成二度傷害</h3><p>細節被反覆問起，可能讓學生再次受傷。</p></div><div class="tool-card"><div class="tag-dot blue">3</div><h3>避免程序風險</h3><p>私下確認、對質、群組討論都可能增加爭議。</p></div></div></div></section>
+<section class="slide paper" data-notes="數位事件很重要的一頁，讓老師知道保存與散布不同。"><div class="content">
+<div class="ribbon">數位線索</div><h2>證據與截圖：可以保存，不要散布</h2><p class="sub" style="color:rgba(26,39,64,.72);max-width:980px">數位資料不是拿來傳給大家看的，是拿來交給制度保存與處理的。</p><div class="tool-grid three"><div class="tool-card"><div class="tag-dot blue">1</div><h3>保存原始資料</h3><p>保留時間、來源、截圖脈絡。</p></div><div class="tool-card"><div class="tag-dot coral">2</div><h3>不要轉傳群組</h3><p>避免擴大傷害與個資外流。</p></div><div class="tool-card"><div class="tag-dot mint">3</div><h3>交給指定窗口</h3><p>由學校正式程序接手保存。</p></div></div></div></section>
+<section class="slide paper" data-notes="這頁可以連到家長群組和同事私下討論的風險。"><div class="content">
+<div class="ribbon">資訊邊界</div><h2>資訊邊界：誰需要知道？誰不需要知道？</h2><p class="sub" style="color:rgba(26,39,64,.72);max-width:980px">知道的人越多，不一定越安全；資訊應回到職務需要與保護必要。</p><div class="tool-grid three"><div class="tool-card"><div class="tag-dot mint">要</div><h3>需要知道的人</h3><p>學務、輔導、主管、通報或性平業務相關人員。</p></div><div class="tool-card"><div class="tag-dot coral">不</div><h3>不需要知道的人</h3><p>無關同事、班群家長、學生群組、非必要行政群組。</p></div><div class="tool-card"><div class="tag-dot blue">界</div><h3>資訊只說必要範圍</h3><p>說事實、說流程，不說推測與評價。</p></div></div></div></section>
+<section class="slide deep" data-notes="段落轉場：流程不難，難的是人。"><div class="bg" style="background-image:url('assets/slides/16_section_why_difficult.png')"></div><div class="course-map course-map-dark"><div class="course-label">研習地圖</div><span class="">開場</span><span class="">辨識</span><span class="">接住</span><span class="">紀錄</span><span class="on">協作</span><span class="">演練</span><span class="">帶走</span></div></section>
+<section class="slide deep" data-notes="承認現場：學生、家長、同事、行政責任都會進來。"><div class="bg" style="background-image:url('assets/slides/17_hard_part_is_people.png')"></div></section>
+<section class="slide" data-notes="改口不等於說謊。水面上的「我沒事了」，水面下可能有很多壓力。"><div class="bg" style="background-image:url('assets/slides/18_why_students_recant.png')"></div></section>
+<section class="slide visual" data-notes="不要把家長激動直接解讀為刁難；先界定資訊邊界與正式窗口。">
+<div class="bg" style="background-image:url('assets/visuals/08_section_people_pressure.png')"></div><div class="vshade"></div>
+<div class="v-wrap"><div class="v-pill">現場壓力｜家長</div><div class="v-title">為什麼家長會激動？</div><div class="v-line"></div><div class="v-sub">家長要的常常不只是答案，而是感覺孩子被看見、被保護、沒有被孤單留下。</div></div></section>
+<section class="slide visual right" data-notes="提醒：善意的私下協調，常常是程序風險的開端。">
+<div class="bg" style="background-image:url('assets/visuals/07_section_recording_risk.png')"></div><div class="vshade"></div>
+<div class="v-wrap"><div class="v-pill">現場壓力｜同事</div><div class="v-title">為什麼同事會想私下處理？</div><div class="v-line"></div><div class="v-sub">大家都想讓事情快點過去；但越想快，越需要回到程序。</div></div></section>
+<section class="slide paper" data-notes="把老師從被拉扯的位置帶回可執行的界線。"><div class="content">
+<div class="ribbon">角色邊界</div><h2>老師最容易被拉進去的位置</h2><p class="sub" style="color:rgba(26,39,64,.72);max-width:980px">第一線老師常被期待同時當安撫者、判斷者、調查者、說明者；但每一個位置都有邊界。</p><div class="tool-grid three"><div class="tool-card"><div class="tag-dot coral">1</div><h3>被要求判斷真假</h3><p>回到：我會記錄並交由程序處理。</p></div><div class="tool-card"><div class="tag-dot lav">2</div><h3>被要求保密到底</h3><p>回到：我會盡量保護隱私，但必要時需啟動協助。</p></div><div class="tool-card"><div class="tag-dot blue">3</div><h3>被要求私下喬好</h3><p>回到：這件事需要正式窗口一起處理。</p></div></div></div></section>
+<section class="slide" data-notes="學務不是冷冰冰，輔導不是單獨扛。角色不同，目標一致。"><div class="bg" style="background-image:url('assets/slides/19_student_affairs_counseling_roles.png')"></div></section>
+<section class="slide paper" data-notes="這頁不要講成另一條流程線，而是接力分工。請強調：第一線不必一個人承擔全部位置。"><div class="content"><div class="ribbon">行政協作圖</div><h2>不是一個人跑完整條路，而是讓系統接力</h2><div class="handoff-grid"><div class="handoff-card"><div class="label">第一線</div><h3>導師／任課／社團教師</h3><p>接住情緒、確認安全、留下初步客觀紀錄。</p></div><div class="handoff-card"><div class="label">行政窗口</div><h3>學務／主管</h3><p>承接通報、程序判斷、資源調度與對外窗口。</p></div><div class="handoff-card"><div class="label">支持系統</div><h3>輔導／特教／外部資源</h3><p>評估學生需求，提供陪伴、支持與必要轉介。</p></div><div class="handoff-card"><div class="label">正式機制</div><h3>性平會／調查處理</h3><p>依程序受理、調查、處理與後續保護措施。</p></div></div><div class="map-note">接力分工的目的，是讓第一線不必獨自承擔全部壓力。</div></div><div class="course-map course-map-light"><div class="course-label">研習地圖</div><span class="">開場</span><span class="">辨識</span><span class="">接住</span><span class="">紀錄</span><span class="on">協作</span><span class="">演練</span><span class="">帶走</span></div></section>
+<section class="slide" data-notes="案例不要急著講答案。先讓老師回答第一句話、確認什麼、不能做什麼、要不要通報。"><div class="bg" style="background-image:url('assets/slides/20_case_verbal_harassment.png')"></div><div class="course-map course-map-dark"><div class="course-label">研習地圖</div><span class="">開場</span><span class="">辨識</span><span class="">接住</span><span class="">紀錄</span><span class="">協作</span><span class="on">演練</span><span class="">帶走</span></div></section>
+<section class="slide interact" data-notes="第三次手機互動。拉回六步驟。正向答案不是偵查，而是接住情緒、確認安全、紀錄、通報。" data-question-id="q20_case_first_step" data-question-title="案例投票"><div class="phone-tag">手機互動 03</div><div class="content"><div class="activity"><div><div class="kicker">案例投票</div><h2>這時第一步最不適合做什麼？</h2><p>請打開剛才掃描的匿名互動頁，選出你認為「第一步最不適合」的做法。送出後，我們一起看現場統計。</p></div><div class="options"><div class="opt">A 先接住情緒</div><div class="opt">B 確認安全</div><div class="opt">C 客觀記錄</div><div class="opt">D 找雙方自行對質</div></div></div></div></section>
+<section class="slide paper" data-notes="案例拆解請用時間序，不要用對錯先行。"><div class="content"><div class="ribbon">案例拆解</div><h2>當下、當天、後續</h2><div class="case-three"><div class="case-col"><h3>當下</h3><p>接住情緒、確認安全、停止可能的二次傷害；不要立刻對質或追問細節。</p></div><div class="case-col"><h3>當天</h3><p>客觀紀錄原話與可見狀況；通知學務、輔導或主管，啟動校內流程。</p></div><div class="case-col"><h3>後續</h3><p>由正式機制處理；導師持續觀察學生狀態，必要時協助支持與轉介。</p></div></div></div></section>
+<section class="slide" data-notes="數位事件重點：不是先抓兇手，也不是叫學生刪掉就好；先止血，避免再擴散。"><div class="bg" style="background-image:url('assets/slides/21_case_photo_group_spread.png')"></div></section>
+<section class="slide visual right" data-notes="這頁承接既有案例，讓數位事件有一張安靜但清楚的轉場。">
+<div class="bg" style="background-image:url('assets/visuals/09_case_digital_spread.png')"></div><div class="vshade"></div>
+<div class="v-wrap"><div class="v-pill">案例｜照片／群組擴散</div><div class="v-title">數位事件第一時間止血</div><div class="v-line"></div><div class="v-sub">先停止擴散，再保存線索；不要讓群組變成第二個現場。</div></div></section>
+<section class="slide paper" data-notes="用溫和語氣處理親密關係，不替學生做情感判斷。"><div class="content">
+<div class="ribbon">案例三</div><h2>疑似親密關係衝突：不要被「他們本來就很好」帶走</h2><p class="sub" style="color:rgba(26,39,64,.72);max-width:980px">關係存在，不代表每一次互動都被同意；熟識也不是免責理由。</p><div class="tool-grid three"><div class="tool-card"><div class="tag-dot">1</div><h3>先看當下不舒服</h3><p>學生是否表達害怕、排斥、壓力或困擾。</p></div><div class="tool-card"><div class="tag-dot mint">2</div><h3>不要替學生定義關係</h3><p>不說「你們不是很好嗎」。</p></div><div class="tool-card"><div class="tag-dot blue">3</div><h3>回到流程處理</h3><p>接住、簡要留痕、交給窗口、讓制度接手。</p></div></div></div></section>
+<section class="slide paper" data-notes="討論頁，不急著公布答案，讓老師練習辨識風險語句。"><div class="content">
+<div class="ribbon">小組討論</div><h2>小組討論：哪一句話會讓事情變糟？</h2><p class="sub" style="color:rgba(26,39,64,.72);max-width:980px">請從下面三句話中挑一個最有風險的，並說明為什麼。</p><div class="tool-grid three"><div class="tool-card"><div class="tag-dot coral">A</div><h3>「你是不是誤會他了？」</h3><p>容易否定學生感受，讓求助中斷。</p></div><div class="tool-card"><div class="tag-dot coral">B</div><h3>「我去把他叫來問清楚。」</h3><p>可能造成對質與二次傷害。</p></div><div class="tool-card"><div class="tag-dot coral">C</div><h3>「這件事先不要讓別人知道。」</h3><p>可能形成錯誤保密承諾。</p></div></div></div></section>
+<section class="slide dark-tool" data-notes="收束工具頁，可以讓老師拍照帶走。"><div class="content">
+<div class="ribbon">現場風險清單</div><h2>五個不要</h2><p class="sub" style="color:rgba(26,39,64,.72);max-width:980px">現場越混亂，越要先守住這五條線。</p><div class="tool-grid five"><div class="tool-card"><div class="tag-dot coral">1</div><h3>不要對質</h3><p>避免讓學生在壓力中重新面對對方。</p></div><div class="tool-card"><div class="tag-dot coral">2</div><h3>不要追問細節</h3><p>先紀錄必要資訊，避免變成偵訊。</p></div><div class="tool-card"><div class="tag-dot coral">3</div><h3>不要承諾保密</h3><p>可以保護隱私，但必要時需啟動協助。</p></div><div class="tool-card"><div class="tag-dot coral">4</div><h3>不要自行判斷真假</h3><p>第一線不是調查小組。</p></div><div class="tool-card"><div class="tag-dot coral">5</div><h3>不要在群組討論</h3><p>避免資訊外流與二次擴散。</p></div></div></div><div class="course-map course-map-dark"><div class="course-label">研習地圖</div><span class="">開場</span><span class="">辨識</span><span class="">接住</span><span class="">紀錄</span><span class="">協作</span><span class="">演練</span><span class="on">帶走</span></div></section>
+<section class="slide paper" data-notes="和五個不要成對。不要太快講完，這是帶走頁。"><div class="content">
+<div class="ribbon">現場風險清單</div><h2>五個要</h2><p class="sub" style="color:rgba(26,39,64,.72);max-width:980px">第一線老師真正需要做的，是把現場穩住，讓制度接手。</p><div class="tool-grid five"><div class="tool-card"><div class="tag-dot mint">1</div><h3>要接住</h3><p>先承接情緒，不否定、不質疑。</p></div><div class="tool-card"><div class="tag-dot mint">2</div><h3>要確認安全</h3><p>確認學生是否需要陪伴、隔離或醫療協助。</p></div><div class="tool-card"><div class="tag-dot mint">3</div><h3>要紀錄</h3><p>寫事實、原話、時間與可見狀況。</p></div><div class="tool-card"><div class="tag-dot mint">4</div><h3>要通報</h3><p>讓正式機制開始處理。</p></div><div class="tool-card"><div class="tag-dot mint">5</div><h3>要轉介</h3><p>依需要連結輔導、行政與外部資源。</p></div></div></div></section>
+<section class="slide paper" data-notes="這頁是檢核表，可以讓老師回到學校後沿用。"><div class="content"><div class="ribbon">一頁檢核表</div><h2>我現在該做什麼？</h2><div class="matrix"><div class="bigcard"><div class="huge">先問自己：<br/>學生現在安全嗎？<br/>我是否只記錄事實？<br/>我是否已交給正式窗口？</div></div><div class="side-list"><div class="side-item">□ 接住情緒，不審問</div><div class="side-item">□ 確認安全與陪伴</div><div class="side-item">□ 簡要紀錄原話與時間</div><div class="side-item">□ 立即交給校內權責窗口</div><div class="side-item">□ 避免群組討論與對質</div></div></div></div></section>
+<section class="slide paper" data-notes="鼓勵老師求援，不把求援視為不專業。"><div class="content">
+<div class="ribbon">立刻求援</div><h2>什麼情況要立刻找行政／輔導／主管？</h2><p class="sub" style="color:rgba(26,39,64,.72);max-width:980px">出現安全、情緒、擴散或家長高壓時，不要讓第一線老師單獨承受。</p><div class="tool-grid"><div class="tool-card"><div class="tag-dot coral">急</div><h3>安全風險</h3><p>學生害怕、可能自傷或可能再接觸對方。</p></div><div class="tool-card"><div class="tag-dot lav">擴</div><h3>數位擴散</h3><p>照片、影片、群組訊息仍在流動。</p></div><div class="tool-card"><div class="tag-dot blue">壓</div><h3>家長或同儕壓力</h3><p>家長激動、同學圍觀、班級輿論升高。</p></div><div class="tool-card"><div class="tag-dot mint">疑</div><h3>你不確定怎麼做</h3><p>不確定時，就是該找窗口一起判斷。</p></div></div></div></section>
+<section class="slide visual soft" data-notes="結尾互動。不是驗收，而是讓老師知道自己現在在哪裡，也讓講者知道哪裡還需要補。" data-question-id="q42_green_yellow_red" data-question-title="流程掌握狀態"><div class="bg" style="background-image:url('assets/visuals/03_interaction_desktop.png')"></div><div class="vshade"></div><div class="v-wrap" style="max-width:76%"><div class="v-pill">手機互動 04</div><div class="v-title">你現在對流程的狀態是？</div><div class="v-sub">請選一個顏色，代表你現在對第一時間處理流程的掌握程度。</div><div class="redyellowgreen"><div class="status-card"><div class="status" style="color:#3F5D4A">綠</div><h3>我知道下一步</h3><p>遇到事件時，我大致知道如何接住與通報。</p></div><div class="status-card"><div class="status" style="color:#8A6A35">黃</div><h3>我還有點卡</h3><p>知道原則，但需要更多校內分工與窗口。</p></div><div class="status-card"><div class="status" style="color:#6E3A3A">紅</div><h3>我需要再釐清</h3><p>遇到真實情境時，仍擔心自己做錯。</p></div></div></div></section>
+<section class="slide visual right" data-notes="最後情緒收束。慢慢說，讓句子停住。">
+<div class="bg" style="background-image:url('assets/visuals/10_closing_system_support.png')"></div><div class="vshade"></div>
+<div class="v-wrap"><div class="v-pill">收束</div><div class="v-title">通報不是把事情變大，<br/>是讓孩子不必一個人留在事情裡。</div><div class="v-line"></div><div class="v-sub">讓系統接手，也讓第一線的你，被制度一起接住。</div></div></section>
+<section class="slide deep" data-notes="保留原本收束頁，作為第二層結語。"><div class="bg" style="background-image:url('assets/slides/23_closing_quote.png')"></div></section>
+<section class="slide" data-notes="進入討論：不急著找標準答案，把現場難題攤開來談。"><div class="bg" style="background-image:url('assets/slides/24_qa.png')"></div></section>
+<section class="slide deep" data-notes="最後補充工具連結。可提醒老師：若未來遇到案件，可使用檢核工具協助釐清流程，但仍應依學校正式程序辦理。"><div class="content full-center"><div class="kicker">延伸工具</div><h1>校園性別事件檢核工具</h1><p class="sub">掃描 QR Code，開啟實務檢核頁</p><div class="final-qr-box"><img alt="校園性別事件檢核工具 QR Code" src="assets/gender-checkdesk.png"/><div class="final-qr-caption">校園性別事件檢核工具</div></div><p class="small final-qr-note">提醒：本工具作為流程檢核與風險提醒使用，實際處理仍應依學校性平會、法規與主管機關規定辦理。</p></div></section>
+</div>
+<div class="notes" id="notes"><h3>講者備忘</h3><div id="noteText"></div></div>
+<div class="hud"><div>← → / Space 換頁　N 講者備忘　F 全螢幕　G 總覽　D 統計頁　R 重新同步互動題　P 列印</div><div id="pageNo"></div></div><div class="bar" id="bar"></div>
+<script>
+const slides=[...document.querySelectorAll('.slide')];let i=0;const notes=document.getElementById('notes');const noteText=document.getElementById('noteText');
+const CONFIG = window.INTERACTION_CONFIG || {};
+const GAS_ENDPOINT = CONFIG.GAS_ENDPOINT || "";
+const SESSION_ID = CONFIG.SESSION_ID || "gender-seminar-2026";
+
+let lastSyncedQuestionId = "";
+let syncRetryTimers = [];
+const LIVE_QUESTION_KEY = "gender_seminar_live_question";
+let questionChannel = null;
+
+function runAfterSlidePaint(fn) {
+  if ('requestAnimationFrame' in window) {
+    requestAnimationFrame(() => setTimeout(fn, 0));
+    return;
+  }
+
+  setTimeout(fn, 0);
+}
+
+function clearSyncRetryTimers() {
+  syncRetryTimers.forEach(timer => clearTimeout(timer));
+  syncRetryTimers = [];
+}
+
+function sendCurrentQuestionPayload(payload) {
+  fetch(GAS_ENDPOINT, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(payload)
+  }).catch(err => console.warn("互動題同步失敗", err));
+}
+
+function getQuestionChannel() {
+  if (!('BroadcastChannel' in window)) return null;
+  if (!questionChannel) questionChannel = new BroadcastChannel("gender_seminar_question");
+  return questionChannel;
+}
+
+function publishLocalCurrentQuestion(payload) {
+  const data = {
+    session_id: payload.session_id,
+    question_id: payload.question_id,
+    title: payload.title,
+    updated_at: new Date().toISOString()
+  };
+
+  try {
+    const channel = getQuestionChannel();
+    if (channel) channel.postMessage(data);
+  } catch(e) {}
+
+  setTimeout(() => {
+    try {
+      localStorage.setItem(LIVE_QUESTION_KEY, JSON.stringify(data));
+    } catch(e) {}
+  }, 0);
+}
+
+function syncCurrentQuestion(slide, force = false, robust = false) {
+  const questionId = slide.dataset.questionId;
+  const title = slide.dataset.questionTitle || "";
+
+  if (!questionId) return;
+  if (!GAS_ENDPOINT || GAS_ENDPOINT.includes("請填入")) return;
+  if (!force && questionId === lastSyncedQuestionId) return;
+
+  lastSyncedQuestionId = questionId;
+  clearSyncRetryTimers();
+
+  const payload = {
+    action: "set_current",
+    session_id: SESSION_ID,
+    question_id: questionId,
+    title: title
+  };
+
+  publishLocalCurrentQuestion(payload);
+
+  const delays = robust ? [80, 1100, 3100] : [250, 1600];
+
+  delays.forEach(delay => {
+    syncRetryTimers.push(setTimeout(() => {
+      sendCurrentQuestionPayload(payload);
+    }, delay));
+  });
+}
+
+function scheduleCurrentQuestionSync(slide, force = false, robust = false) {
+  if (!slide.dataset.questionId) {
+    clearSyncRetryTimers();
+    return;
+  }
+
+  runAfterSlidePaint(() => syncCurrentQuestion(slide, force, robust));
+}
+
+function resyncCurrentQuestion() {
+  scheduleCurrentQuestionSync(slides[i], true, true);
+}
+function audienceUrl(){try{return new URL('audience.html', location.href).href}catch(e){return 'audience.html'}}
+['audienceUrl1','audienceUrl2','audienceUrl3'].forEach(id=>{const el=document.getElementById(id); if(el) el.textContent='聽眾頁：'+audienceUrl();});
+function dashboardUrl(){
+  try {
+    return new URL('dashboard.html', location.href).href;
+  } catch(e) {
+    return 'dashboard.html';
+  }
+}
+function updateSlideHash(n) {
+  const hash = '#s' + (n + 1);
+  if (location.hash === hash) return;
+
+  try {
+    history.replaceState(null, '', hash);
+  } catch(e) {
+    location.hash = hash;
+  }
+}
+function show(n) {
+  i = Math.max(0, Math.min(slides.length - 1, n));
+
+  slides.forEach((s, k) => {
+    s.classList.toggle('active', k === i);
+  });
+
+  document.getElementById('pageNo').textContent = (i + 1) + ' / ' + slides.length;
+  document.getElementById('bar').style.width = ((i + 1) / slides.length * 100) + '%';
+  noteText.textContent = slides[i].dataset.notes || '';
+  updateSlideHash(i);
+
+  scheduleCurrentQuestionSync(slides[i]);
+}
+function next(){show(i+1)} function prev(){show(i-1)}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();next()} if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();prev()} if(e.key==='Home')show(0); if(e.key==='End')show(slides.length-1); if(e.key.toLowerCase()==='n')notes.classList.toggle('show'); if(e.key.toLowerCase()==='f'){document.documentElement.requestFullscreen?.()} if(e.key.toLowerCase()==='g'){document.body.classList.toggle('overview')} if(e.key.toLowerCase()==='r'){resyncCurrentQuestion()} if(e.key.toLowerCase()==='p')window.print();if(e.key.toLowerCase()==='d'){
+  window.open(dashboardUrl(), '_blank', 'noopener');
+} if(e.key==='Escape'&&document.body.classList.contains('overview'))document.body.classList.remove('overview')});
+document.addEventListener('click',e=>{if(document.body.classList.contains('overview')){const s=e.target.closest('.slide'); if(s){document.body.classList.remove('overview');show(slides.indexOf(s));}}});
+const m=location.hash.match(/s(\d+)/);show(m?Number(m[1])-1:0);
+</script>
+</body>
+</html>
