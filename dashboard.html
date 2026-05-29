@@ -208,25 +208,22 @@
       </div>
     <section class="card" data-question-card="q03_anxiety">
       <h2>暖身投票｜最擔心什麼？</h2>
-      <div class="meta">A 要不要通報｜B 家長會不會爆炸｜C 程序有沒有錯｜D 我是不是踩法規</div>
+      <div class="meta">A 說錯話｜B 判斷錯｜C 家長爆炸｜D 程序出錯</div>
       <div id="q03"></div>
     </section>
-
-    <section class="card" data-question-card="q12_first_words">
+    <section class="card" data-question-card="q12_first_sentence">
       <h2>快問快答｜第一句話</h2>
-      <div class="meta">A 謝謝你願意說｜B 你確定嗎｜C 他不是那種人｜D 你是不是誤會</div>
+      <div class="meta">A 你確定嗎｜B 為什麼現在才說｜C 謝謝你告訴我，我會先陪你確認安全｜D 你是不是誤會了</div>
       <div id="q12"></div>
     </section>
-
     <section class="card" data-question-card="q20_case_first_step">
       <h2>案例投票｜最不適合做什麼？</h2>
-      <div class="meta">A 接住情緒｜B 確認安全｜C 客觀紀錄｜D 找雙方自行對質</div>
+      <div class="meta">A 先接住情緒｜B 確認安全｜C 簡要留痕｜D 找雙方自行對質</div>
       <div id="q20"></div>
     </section>
-
-    <section class="card" data-question-card="q_flow_status">
-      <h2>三色回饋</h2>
-      <div class="meta">綠：知道下一步｜黃：還不確定｜紅：先停下來求助</div>
+    <section class="card" data-question-card="q42_green_yellow_red">
+      <h2>綠黃紅</h2>
+      <div class="meta">綠：我知道下一步｜黃：我還有點卡｜紅：我需要再釐清</div>
       <div id="traffic"></div>
     </section>
 
@@ -248,6 +245,15 @@
     const LIVE_QUESTION_KEY = "gender_seminar_live_question";
     let questionChannel = null;
 
+    const QUESTION_ALIASES = {
+      q12_first_words: "q12_first_sentence",
+      q_flow_status: "q42_green_yellow_red"
+    };
+
+    function normalizeQuestionId(questionId) {
+      return QUESTION_ALIASES[questionId] || questionId;
+    }
+
     function getLiveCurrentQuestion() {
       try {
         return JSON.parse(localStorage.getItem(LIVE_QUESTION_KEY) || "null");
@@ -260,7 +266,7 @@
       if (!data || !data.question_id) return;
       if (data.session_id && data.session_id !== SESSION_ID) return;
 
-      currentQuestionId = data.question_id;
+      currentQuestionId = normalizeQuestionId(data.question_id);
       updateCurrentQuestionView(data.title || data.question_id);
     }
 
@@ -357,8 +363,9 @@ function updateCurrentQuestionView(title) {
   });
 }
     
-    function getQuestion(stats, id) {
-      return (stats.questions && stats.questions[id]) || {};
+    function getQuestion(stats, id, fallbackId) {
+      const questions = stats.questions || {};
+      return questions[id] || (fallbackId ? questions[fallbackId] : null) || {};
     }
 
     function renderBars(elId, data, keys) {
@@ -398,8 +405,8 @@ function updateCurrentQuestionView(title) {
       el.innerHTML = `
         <div class="traffic-grid">
           <div class="traffic-row green"><span>綠｜我知道下一步</span><span>${green}</span></div>
-          <div class="traffic-row yellow"><span>黃｜我還不確定</span><span>${yellow}</span></div>
-          <div class="traffic-row red"><span>紅｜我會想先停下來求助</span><span>${red}</span></div>
+          <div class="traffic-row yellow"><span>黃｜我還有點卡</span><span>${yellow}</span></div>
+          <div class="traffic-row red"><span>紅｜我需要再釐清</span><span>${red}</span></div>
         </div>
       `;
     }
@@ -430,9 +437,9 @@ function updateCurrentQuestionView(title) {
         const data = await jsonp(url);
 
         renderBars("q03", getQuestion(data, "q03_anxiety"), ["A", "B", "C", "D"]);
-        renderBars("q12", getQuestion(data, "q12_first_words"), ["A", "B", "C", "D"]);
+        renderBars("q12", getQuestion(data, "q12_first_sentence", "q12_first_words"), ["A", "B", "C", "D"]);
         renderBars("q20", getQuestion(data, "q20_case_first_step"), ["A", "B", "C", "D"]);
-        renderTraffic(getQuestion(data, "q_flow_status"));
+        renderTraffic(getQuestion(data, "q42_green_yellow_red", "q_flow_status"));
         renderMessages(data.messages || []);
 
         const now = new Date();

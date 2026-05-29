@@ -209,7 +209,7 @@
 
   <section class="panel" id="currentQuestionPanel">
     <h2 id="currentQuestionTitle">暖身投票</h2>
-    <div class="question" id="currentQuestionPrompt">第一時間，你最擔心的是什麼？</div>
+    <div class="question" id="currentQuestionPrompt">第一時間你最擔心什麼？</div>
     <div class="grid" id="currentQuestionOptions"></div>
     <div class="small" id="currentQuestionHint">請依照投影片提示作答。</div>
   </section>
@@ -265,24 +265,24 @@ function renderCurrentQuestion() {
     const QUESTIONS = {
   q03_anxiety: {
     title: "暖身投票",
-    prompt: "第一時間，你最擔心的是什麼？",
+    prompt: "第一時間你最擔心什麼？",
     type: "choice",
     options: [
-      ["A", "要不要通報？"],
-      ["B", "家長會不會爆炸？"],
-      ["C", "程序有沒有錯？"],
-      ["D", "我是不是踩法規？"]
+      ["A", "說錯話"],
+      ["B", "判斷錯"],
+      ["C", "家長爆炸"],
+      ["D", "程序出錯"]
     ]
   },
-  q12_first_words: {
-    title: "快問快答｜第一句話",
-    prompt: "學生說出事件後，第一句話最適合？",
+  q12_first_sentence: {
+    title: "第一句話",
+    prompt: "學生說出事件後，第一句話怎麼接？",
     type: "choice",
     options: [
-      ["A", "謝謝你願意說"],
-      ["B", "你確定嗎？"],
-      ["C", "他不是那種人"],
-      ["D", "你是不是誤會？"]
+      ["A", "你確定嗎？"],
+      ["B", "為什麼現在才說？"],
+      ["C", "謝謝你告訴我，我會先陪你確認安全。"],
+      ["D", "你是不是誤會了？"]
     ]
   },
   q20_case_first_step: {
@@ -292,21 +292,30 @@ function renderCurrentQuestion() {
     options: [
       ["A", "先接住情緒"],
       ["B", "確認安全"],
-      ["C", "客觀紀錄"],
+      ["C", "簡要留痕"],
       ["D", "找雙方自行對質"]
     ]
   },
-  q_flow_status: {
-    title: "三色回饋",
-    prompt: "聽到這裡，你對「第一時間怎麼做」的狀態是？",
+  q42_green_yellow_red: {
+    title: "綠黃紅",
+    prompt: "你現在對流程的狀態是？",
     type: "traffic",
     options: [
       ["green", "綠｜我知道下一步"],
-      ["yellow", "黃｜我還不確定"],
-      ["red", "紅｜我會想先停下來求助"]
+      ["yellow", "黃｜我還有點卡"],
+      ["red", "紅｜我需要再釐清"]
     ]
   }
 };
+
+const QUESTION_ALIASES = {
+  q12_first_words: "q12_first_sentence",
+  q_flow_status: "q42_green_yellow_red"
+};
+
+function normalizeQuestionId(questionId) {
+  return QUESTION_ALIASES[questionId] || questionId;
+}
 
 const CURRENT_QUESTION_KEY = "gender_seminar_current_question";
 const LIVE_QUESTION_KEY = "gender_seminar_live_question";
@@ -323,9 +332,11 @@ function getLiveCurrentQuestion() {
 function getCachedCurrentQuestionId() {
   try {
     const live = getLiveCurrentQuestion();
-    if (live && QUESTIONS[live.question_id]) return live.question_id;
+    if (live && QUESTIONS[normalizeQuestionId(live.question_id)]) {
+      return normalizeQuestionId(live.question_id);
+    }
 
-    const cached = localStorage.getItem(CURRENT_QUESTION_KEY);
+    const cached = normalizeQuestionId(localStorage.getItem(CURRENT_QUESTION_KEY));
     return QUESTIONS[cached] ? cached : "q03_anxiety";
   } catch (err) {
     return "q03_anxiety";
@@ -341,11 +352,13 @@ function saveCurrentQuestionId(questionId) {
 let currentQuestionId = getCachedCurrentQuestionId();
 
 function applyCurrentQuestionData(data) {
-  if (!data || !QUESTIONS[data.question_id]) return;
+  if (!data) return;
+  const questionId = normalizeQuestionId(data.question_id);
+  if (!QUESTIONS[questionId]) return;
   if (data.session_id && data.session_id !== SESSION_ID) return;
 
-  if (currentQuestionId !== data.question_id) {
-    currentQuestionId = data.question_id;
+  if (currentQuestionId !== questionId) {
+    currentQuestionId = questionId;
     saveCurrentQuestionId(currentQuestionId);
     renderCurrentQuestion();
   } else {
