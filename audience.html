@@ -255,7 +255,7 @@
   <main>
   <div class="notice">
     <strong>請放心作答：</strong>本頁不要求姓名、不登入、不蒐集 email。<br>
-    留言請勿輸入學生姓名、班級、座號、學校真實個案細節或任何可識別資料。
+    作答請勿輸入學生姓名、班級、座號、學校真實個案細節或任何可識別資料。
   </div>
 
   <section class="panel" id="currentQuestionPanel">
@@ -265,13 +265,6 @@
     <div class="small" id="currentQuestionHint">請依照投影片提示作答。</div>
   </section>
 
-  <section class="panel">
-    <h2>匿名一句話</h2>
-    <div class="question">聽完今天，你想帶回學校的一句提醒是什麼？</div>
-    <textarea id="messageInput" maxlength="50" placeholder="請輸入 50 字以內。請勿輸入任何可識別個案資訊。"></textarea>
-    <button class="send-btn" onclick="submitMessage()">送出匿名留言</button>
-    <div class="small">最多 50 字。留言會出現在講者端 dashboard，講者可選擇是否現場分享。</div>
-  </section>
 </main>
 
   <div id="status" class="status"></div>
@@ -572,39 +565,6 @@ function restoreSubmittedState() {
       });
 
       showStatus("已送出，謝謝！");
-    }
-
-    function submitMessage() {
-      const input = document.getElementById("messageInput");
-      const message = sanitizeMessage(input.value);
-
-      if (!message) {
-        showStatus("請先輸入一句話");
-        return;
-      }
-
-      if (!GAS_ENDPOINT || GAS_ENDPOINT.includes("請填入")) {
-        showStatus("尚未設定 GAS_ENDPOINT");
-        return;
-      }
-
-      const payload = {
-        session_id: SESSION_ID,
-        question_id: "q_final_message",
-        response_type: "message",
-        answer: "",
-        message: message
-      };
-
-      fetch(GAS_ENDPOINT, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(payload)
-      });
-
-      input.value = "";
-      showStatus("匿名留言已送出");
     }
 
   setupLocalQuestionSync();
